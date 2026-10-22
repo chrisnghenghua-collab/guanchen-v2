@@ -1,4 +1,6 @@
-import { LunarDay, LunarYear, SolarDay } from "tyme4ts";
+import * as TymeNS from "tyme4ts";
+// Works whether the host loads tyme4ts as ES module or as CommonJS (Netlify, 2026-10-23). Same classes either way.
+const { LunarDay, LunarYear, SolarDay } = ("SolarDay" in TymeNS ? TymeNS : (TymeNS as any).default) as any;
 import type { CivilDate } from "./gregorian.ts";
 
 export type LunarDate = {

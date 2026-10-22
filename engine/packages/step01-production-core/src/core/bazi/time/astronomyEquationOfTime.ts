@@ -1,4 +1,7 @@
-import { Body, Equator, Observer, SiderealTime } from "astronomy-engine";
+import * as AstronomyNS from "astronomy-engine";
+// Works whether the host loads astronomy-engine as ES module or as CommonJS (Netlify, 2026-10-23). Same functions either way.
+const Astronomy: any = "Body" in AstronomyNS ? AstronomyNS : (AstronomyNS as any).default;
+const { Body, Equator, Observer, SiderealTime } = Astronomy;
 import type { EquationOfTimeProvider } from "./trueSolarTime.ts";
 
 function normalizeHoursSigned(hours: number): number {

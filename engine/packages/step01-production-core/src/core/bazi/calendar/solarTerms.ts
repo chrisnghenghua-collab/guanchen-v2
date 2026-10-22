@@ -1,4 +1,6 @@
-import { SearchSunLongitude } from "astronomy-engine";
+import * as AstronomyNS from "astronomy-engine";
+// Works whether the host loads astronomy-engine as ES module or as CommonJS (Netlify, 2026-10-23). Same function either way.
+const { SearchSunLongitude } = ("SearchSunLongitude" in AstronomyNS ? AstronomyNS : (AstronomyNS as any).default) as any;
 
 export const SOLAR_TERMS = [
   { name: "小寒", longitude: 285, approxMonth: 1, approxDay: 5, kind: "JIE" },
