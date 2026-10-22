@@ -66,6 +66,7 @@
 
 ## 8. 变更记录
 - 2026-10-22 API v2：新增 `engine\api\`（reading-service.mjs、http-handler.mjs）、`engine\netlify\functions\reading.mjs`、`tests\v2_api.mjs`、`tests\golden\v2_chart_expected.json`、`tools\copy_add.py`（只新增、不覆盖文案）；文案表新增 29 条（全局免责、错误提示、命盘总览）。旧接口未改动。
+- 2026-10-23 P5 探针结果：线上 Node v24.21.0；引擎文件与四个库都已带上，但函数包根目录**没有 `package.json`**，引擎加载失败（`ruleAuthority.ts does not provide an export named 'BA_ZI_RULE_AUTHORITY'`：没有 `"type": "module"`，.ts 被当成 CommonJS）。修正：`netlify.toml` 的 `included_files` 加入 `package.json`。
 - 2026-10-23 P5 排查：第三次部署记录显示 `0 new function(s) to upload`（`nft` 设定从未生效，fix 2/3 的函数包相同），部署完成后 30 秒的测试有效，仍为 `handler is not a function`。用 Netlify 官方打包工具（zip-it-and-ship-it，Chris 本机）检查 5 个入口版本：全部判为新式（v2）；用其启动程序在本机模拟执行，包括真实引擎：全部正常。结论：代码本身没问题，差异在 Netlify 服务器上实际生成的函数包。新增**临时**探针函数 `/api/v2/diag-probe`（须带 `x-guanchen-diag: 1`，否则 404），回报线上函数包内容与引擎能否加载；P5 通过后移除。
 - 2026-10-23 P5 第三次修正：第二次修正部署后，模块已能加载，但出现 `handler is not a function`——`node_bundler = "nft"` 使 Netlify 把函数当成旧式（v1）函数。移除该行，恢复默认打包；引擎改为运行时加载后已不会被合并。
 - 2026-10-23 P5 第二次修正（`node_bundler = "nft"` 未生效，函数仍被合并成一个文件、仍 502）：①两个函数入口改为运行时按计算出的路径加载引擎（打包工具无法合并），引擎文件经 `included_files` 原样带上；②计算核心三个文件（`astronomyEquationOfTime.ts`、`solarTerms.ts`、`lunarCalendar.ts`）只改第一行的库引用方式，使 astronomy-engine / tyme4ts 不论以 ES module 或 CommonJS 加载都能取得同一组函数；计算逻辑未改。证明：v2 42/42（golden 逐字节相同）、10/10、交叉核对 1574 一致 0 不一致、旧接口逐字节相同、P3 分布、P4 模型均 PASS。③**临时**诊断：请求带 `x-guanchen-diag: 1` 时，500 回应附上错误首行（`diag`），P5 通过后移除。
