@@ -10,9 +10,14 @@
 
 [functions]
   directory = "netlify/functions"
+  # Do NOT bundle (2026-10-23 fix): the default bundler merged the engine into one file, which loaded
+  # astronomy-engine as CommonJS (502 "Named export 'Body' not found") and would also break the
+  # import.meta.url reads of the copy/location tables. "nft" keeps every file at its original path.
+  node_bundler = "nft"
   # The engine imports .ts files directly (Node 24 strips types) and reads its data/copy files from disk,
-  # so these folders are shipped as-is next to the functions.
-  included_files = ["api/**", "interpretation/**", "packages/**", "server/**", "src/**"]
+  # so these folders and the four pinned libraries are shipped as-is next to the functions.
+  included_files = ["api/**", "interpretation/**", "packages/**", "server/**", "src/**",
+    "node_modules/astronomy-engine/**", "node_modules/tyme4ts/**", "node_modules/moment-timezone/**", "node_modules/moment/**"]
 
 [[headers]]
   for = "/*"

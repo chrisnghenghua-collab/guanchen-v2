@@ -35,7 +35,7 @@
 | P2 计算核对 | **PASS**（2026-10-22） | 独立交叉核对 1454 盘：1404 盘一致，0 处真正不一致；Chris 的 10 组 Swiss Ephemeris 资料 10/10 一致；P2-01、D-01（子初换日）、D-02（142 个地点含台港澳）均已完成（见 `docs\P2_CALC_REPORT.md`） |
 | P3 文案重建 | **进行中**：P3-1 命盘事实层、P3-2 写法（Chris 已认可）、P3-3 全部 20 题完成；文案表 672 条；500 盘检查每题最多一个结论占比 7%～35%，无重复、无外露代码（`docs\P3_SAMPLES_GENERATED.txt`）。P3-4（2026-10-22）：按 Chris 决定，**不沿用旧接口，另建全新 API v2** `/api/v2/reading`（`docs\API_V2.md`），31/31 测试通过。**P3 收口**：RUN_TESTS 5 项在 Chris 的 Windows Node 24 上全部 PASS（2026-10-22 23:37） | 判断与文案分离；文案表由 Chris 可直接编辑；先做 2～3 题样稿；「换工作」「新机会」改写为中立立场并设计所需输入 |
 | P4 时辰不详 | **V1 完成（2026-10-23 Chris Windows RUN_TESTS 6/6 PASS）**（`docs\P4_TIME_UNKNOWN_EVAL.md` 第六节、`docs\API_V2.md`） | 问卷反推：选时段 → 逐题回答 → 前 2 名候选 + 百分比 → 点选自动填入。模拟：知道时段前 2 名 99%；完全不知道 67–90%（乱猜 15%）。真实准确度未验证 |
-| P5 Netlify 预览 | **进行中**（2026-10-23 Chris 批准）：本地准备完成（真人样本资料已换成虚构、旧接口移入 `engine\legacy\`、`netlify.toml`、`.gitignore`、建设中首页、`tests\p5_live_check.mjs`）；待 Chris 上传 GitHub 私有仓库并在 Netlify 连接部署 | Netlify 新网站默认 Node 24（2026-07 起）；部署设置已加 `NODE_VERSION=24` |
+| P5 Netlify 预览 | **进行中**（2026-10-23 Chris 批准）：本地准备完成（真人样本资料已换成虚构、旧接口移入 `engine\legacy\`、`netlify.toml`、`.gitignore`、建设中首页、`tests\p5_live_check.mjs`）；GitHub 私有仓库 `chrisnghenghua-collab/guanchen-v2` 已上传（2026-10-23，main @ `f04fc79`，114 个文件）；待 Netlify 连接部署 | Netlify 新网站默认 Node 24（2026-07 起）；部署设置已加 `NODE_VERSION=24` |
 | P6 UI | 待办（最后做） | 呈现建议：总览只显示结论 → 点开看结论与建议 → 「命盘依据」默认收起；日主与格局依据放命盘总览页 |
 
 ## 5. 已证实的事实
@@ -66,6 +66,8 @@
 
 ## 8. 变更记录
 - 2026-10-22 API v2：新增 `engine\api\`（reading-service.mjs、http-handler.mjs）、`engine\netlify\functions\reading.mjs`、`tests\v2_api.mjs`、`tests\golden\v2_chart_expected.json`、`tools\copy_add.py`（只新增、不覆盖文案）；文案表新增 29 条（全局免责、错误提示、命盘总览）。旧接口未改动。
+- 2026-10-23 P5 Netlify 第一次部署：首页正常、旧接口确认未部署；两个函数 502（Netlify 默认打包把引擎合成一个文件，astronomy-engine 被当成 CommonJS 加载：`Named export 'Body' not found`）。网站一开始有访客限制（401），Chris 已在该项目改为公开。修正：`netlify.toml` 加 `node_bundler = "nft"`（不打包，保持原目录结构）并列出四个依赖库；程序代码未改。
+- 2026-10-23 P5 GitHub：首次上传 main @ `f04fc79`。Windows 上 Git 登录小窗口（SkiaSharp）无法打开，改用浏览器登录：`credential.guiPrompt false`、`credential.gitHubAuthModes browser`（全局设定）。
 - 2026-10-23 P5 准备（Chris 批准）：①隐私：A 样本（历史固定资料）原为真人出生资料，B 为虚构；两者均换成虚构资料（A：1990-03-14 15:20 吉隆坡 男；B：1985-09-27 08:10 新加坡 女），涉及 `tests\http_regression.mjs`、`v2_api.mjs`、`p3_preview.mjs`、`engine\src\step05A2…`（已移入 legacy）、`docs\API_V2.md`；`docs\P3_SAMPLES.md` 删去 A 盘出生资料、四柱与三段命盘依据；`P3_SAMPLES_GENERATED.txt` 用新样本重新生成。golden：`gc11_expected.json` 只更新 HTTP-01a/01b/07a/07b/07c 五项（换资料前一刻在 Chris Windows 上逐字节 PASS），`v2_chart_expected.json` 更新 V2-01a/01b；原因写在两个文件内。计算引擎未改动。②旧接口 `result.mjs` 与只被它使用的 32 个文件（含未被引用的 `_shared\astronomy-compat.mjs`）移入 `engine\legacy\`，自动改写相对路径；新接口实际使用的 43 个文件不动。③新增 `netlify.toml`、`.gitignore`、`engine\public\index.html`（建设中，noindex）、`tests\p5_live_check.mjs`；两个函数出错时在 Netlify 后台记录错误（不传给用户）。④上传前扫描：无密钥、token、证书、.env；无真人出生资料。
 - 2026-10-23 P4 V1：新增 `engine\api\time-estimate.mjs`（推测时辰）、`/api/v2/time-estimate` 入口（`engine\netlify\functions\time-estimate.mjs`）；`/api/v2/reading` 接受 `estimate` 并回传 `timeEstimated` 提醒；文案表新增 estimate.* 等行（以 `tools\copy_add.py` 追加，未重生成整份）。测试：`v2_api.mjs` 31→42 项；新增 `p4_estimate_eval.mjs` 为 RUN_TESTS 第 6 步。版本 2.0.0-p4。删除写入中断留下的空文件 `http-handler.mjs.part`（经 Chris 授权删除权限）。计算部分未改动。
 - 2026-10-22 P3-3：`engine\interpretation\questions\`（career / wealth / relationship / wellbeing 四个文件）完成全部 20 题；facts.mjs 新增未来 13 个节气月（与引擎月柱 0 处不一致）和下一流年；换工作 8 种现况、新机会 7 种类型。自审修正：财富机会误把流年写成大运、带冲刑月份被选为好时机、恢复方式「放」配上「补」的活动、关系题提醒措辞。对外接口仍未改动（回归测试逐字节相同）。
