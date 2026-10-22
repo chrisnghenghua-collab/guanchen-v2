@@ -1,0 +1,70 @@
+[build]
+  command = "npm run web:build && node scripts/buildS6ServerPackage.mjs && node scripts/buildS7R1ProviderPackage.mjs"
+  publish = "STEP06_RUNTIME_UI_BUILD_V120"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+[functions]
+  directory = "netlify/functions"
+  included_files = ["_shared/repo/**"]
+
+# Only the frozen SPA routes receive an index rewrite. The /api/result
+# function owns its path; unknown API, missing assets and provider paths stay 404.
+[[redirects]]
+  from = "/birth"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/result"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/result/chart"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/result/timing"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/result/:domain/:questionId"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/result/:domain"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'; worker-src 'none'"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "no-cache, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/config/*"
+  [headers.values]
+    Cache-Control = "no-cache, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

@@ -1,0 +1,1494 @@
+{
+ "schema": "GUANCHEN_LOCATION_CATALOG/2.0.0",
+ "authority": "GUANCHEN_V2_D02_2026_10_22",
+ "version": "birth-location-v2",
+ "note": "Rows 1-57 copied unchanged from location57.v1.json. D-02 (Chris, 2026-10-22) added TW/HK/MO and China gap-fill cities. Coordinates are city-centre references (~0.05 deg, about +/-12 s of true solar time). Xinjiang uses legal Beijing time (Asia/Shanghai), same as the existing Urumqi row.",
+ "previous": {
+  "file": "location57.v1.json",
+  "schema": "GUANCHEN_STEP01_LOCATION_CATALOG/1.0.0",
+  "counts": {
+   "MY": 17,
+   "SG": 1,
+   "CN": 39
+  }
+ },
+ "counts": {
+  "MY": 17,
+  "SG": 1,
+  "CN": 112,
+  "TW": 10,
+  "HK": 1,
+  "MO": 1
+ },
+ "records": [
+  {
+   "id": "my_west_kuala_lumpur",
+   "city": "吉隆坡",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 3.139,
+   "longitude": 101.6869,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": []
+  },
+  {
+   "id": "my_west_penang",
+   "city": "槟城",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 5.4164,
+   "longitude": 100.3327,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": []
+  },
+  {
+   "id": "my_west_ipoh",
+   "city": "怡保",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 4.5975,
+   "longitude": 101.0901,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": []
+  },
+  {
+   "id": "my_west_malacca",
+   "city": "马六甲",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 2.1896,
+   "longitude": 102.2501,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": []
+  },
+  {
+   "id": "my_west_johor_bahru",
+   "city": "新山",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 1.4927,
+   "longitude": 103.7414,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": []
+  },
+  {
+   "id": "my_west_kuantan",
+   "city": "关丹",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 3.8077,
+   "longitude": 103.326,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": []
+  },
+  {
+   "id": "my_west_kota_bharu",
+   "city": "哥达巴鲁",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 6.1254,
+   "longitude": 102.2381,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": [
+    "哥打巴鲁"
+   ]
+  },
+  {
+   "id": "my_west_kuala_terengganu",
+   "city": "瓜拉登嘉楼",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 5.3302,
+   "longitude": 103.1408,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": []
+  },
+  {
+   "id": "my_west_alor_setar",
+   "city": "亚罗士打",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 6.1248,
+   "longitude": 100.3678,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": []
+  },
+  {
+   "id": "my_west_seremban",
+   "city": "芙蓉",
+   "region": "MalaysiaWest",
+   "countryCode": "MY",
+   "latitude": 2.7297,
+   "longitude": 101.9381,
+   "timezone": "Asia/Kuala_Lumpur",
+   "aliases": []
+  },
+  {
+   "id": "my_east_kuching",
+   "city": "古晋",
+   "region": "MalaysiaEast",
+   "countryCode": "MY",
+   "latitude": 1.5533,
+   "longitude": 110.3592,
+   "timezone": "Asia/Kuching",
+   "aliases": []
+  },
+  {
+   "id": "my_east_miri",
+   "city": "美里",
+   "region": "MalaysiaEast",
+   "countryCode": "MY",
+   "latitude": 4.3995,
+   "longitude": 113.9914,
+   "timezone": "Asia/Kuching",
+   "aliases": []
+  },
+  {
+   "id": "my_east_sibu",
+   "city": "诗巫",
+   "region": "MalaysiaEast",
+   "countryCode": "MY",
+   "latitude": 2.2876,
+   "longitude": 111.8305,
+   "timezone": "Asia/Kuching",
+   "aliases": []
+  },
+  {
+   "id": "my_east_kota_kinabalu",
+   "city": "亚庇",
+   "region": "MalaysiaEast",
+   "countryCode": "MY",
+   "latitude": 5.9804,
+   "longitude": 116.0735,
+   "timezone": "Asia/Kuching",
+   "aliases": []
+  },
+  {
+   "id": "my_east_sandakan",
+   "city": "山打根",
+   "region": "MalaysiaEast",
+   "countryCode": "MY",
+   "latitude": 5.8402,
+   "longitude": 118.1179,
+   "timezone": "Asia/Kuching",
+   "aliases": []
+  },
+  {
+   "id": "my_east_tawau",
+   "city": "斗湖",
+   "region": "MalaysiaEast",
+   "countryCode": "MY",
+   "latitude": 4.2447,
+   "longitude": 117.8912,
+   "timezone": "Asia/Kuching",
+   "aliases": []
+  },
+  {
+   "id": "my_east_labuan",
+   "city": "纳闽",
+   "region": "MalaysiaEast",
+   "countryCode": "MY",
+   "latitude": 5.2831,
+   "longitude": 115.2308,
+   "timezone": "Asia/Kuching",
+   "aliases": []
+  },
+  {
+   "id": "sg_singapore",
+   "city": "新加坡",
+   "region": "Singapore",
+   "countryCode": "SG",
+   "latitude": 1.3521,
+   "longitude": 103.8198,
+   "timezone": "Asia/Singapore",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_beijing",
+   "city": "北京",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 39.9042,
+   "longitude": 116.4074,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_tianjin",
+   "city": "天津",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 39.3434,
+   "longitude": 117.3616,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_shijiazhuang",
+   "city": "石家庄",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 38.0428,
+   "longitude": 114.5149,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_taiyuan",
+   "city": "太原",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 37.8706,
+   "longitude": 112.5489,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_hohhot",
+   "city": "呼和浩特",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 40.8426,
+   "longitude": 111.7492,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_shanghai",
+   "city": "上海",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 31.2304,
+   "longitude": 121.4737,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_nanjing",
+   "city": "南京",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 32.0603,
+   "longitude": 118.7969,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_hangzhou",
+   "city": "杭州",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 30.2741,
+   "longitude": 120.1551,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_hefei",
+   "city": "合肥",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 31.8206,
+   "longitude": 117.2272,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_fuzhou",
+   "city": "福州",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 26.0745,
+   "longitude": 119.2965,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_xiamen",
+   "city": "厦门",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 24.4798,
+   "longitude": 118.0894,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_nanchang",
+   "city": "南昌",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 28.682,
+   "longitude": 115.8579,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_jinan",
+   "city": "济南",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 36.6512,
+   "longitude": 117.1201,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_qingdao",
+   "city": "青岛",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 36.0671,
+   "longitude": 120.3826,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_ningbo",
+   "city": "宁波",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 29.8683,
+   "longitude": 121.544,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_guangzhou",
+   "city": "广州",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 23.1291,
+   "longitude": 113.2644,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_shenzhen",
+   "city": "深圳",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 22.5431,
+   "longitude": 114.0579,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_foshan",
+   "city": "佛山",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 23.0215,
+   "longitude": 113.1214,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_zhuhai",
+   "city": "珠海",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 22.2707,
+   "longitude": 113.5767,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_nanning",
+   "city": "南宁",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 22.817,
+   "longitude": 108.3669,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_haikou",
+   "city": "海口",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 20.044,
+   "longitude": 110.1999,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_sanya",
+   "city": "三亚",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 18.2528,
+   "longitude": 109.5119,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_central_wuhan",
+   "city": "武汉",
+   "region": "ChinaCentral",
+   "countryCode": "CN",
+   "latitude": 30.5928,
+   "longitude": 114.3055,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_central_changsha",
+   "city": "长沙",
+   "region": "ChinaCentral",
+   "countryCode": "CN",
+   "latitude": 28.2282,
+   "longitude": 112.9388,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_central_zhengzhou",
+   "city": "郑州",
+   "region": "ChinaCentral",
+   "countryCode": "CN",
+   "latitude": 34.7466,
+   "longitude": 113.6254,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_chongqing",
+   "city": "重庆",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 29.563,
+   "longitude": 106.5516,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_chengdu",
+   "city": "成都",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 30.5728,
+   "longitude": 104.0668,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_guiyang",
+   "city": "贵阳",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 26.647,
+   "longitude": 106.6302,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_kunming",
+   "city": "昆明",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 25.0389,
+   "longitude": 102.7183,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_lhasa",
+   "city": "拉萨",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 29.652,
+   "longitude": 91.1721,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_xian",
+   "city": "西安",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 34.3416,
+   "longitude": 108.9398,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_lanzhou",
+   "city": "兰州",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 36.0611,
+   "longitude": 103.8343,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_xining",
+   "city": "西宁",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 36.6171,
+   "longitude": 101.7782,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_yinchuan",
+   "city": "银川",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 38.4872,
+   "longitude": 106.2309,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_urumqi",
+   "city": "乌鲁木齐",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 43.8256,
+   "longitude": 87.6168,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_shenyang",
+   "city": "沈阳",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 41.8057,
+   "longitude": 123.4315,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_dalian",
+   "city": "大连",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 38.914,
+   "longitude": 121.6147,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_changchun",
+   "city": "长春",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 43.8171,
+   "longitude": 125.3235,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_harbin",
+   "city": "哈尔滨",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 45.8038,
+   "longitude": 126.5349,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "tw_north_taipei",
+   "city": "台北",
+   "region": "TaiwanNorth",
+   "countryCode": "TW",
+   "latitude": 25.033,
+   "longitude": 121.5654,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "臺北",
+    "Taipei"
+   ]
+  },
+  {
+   "id": "tw_north_keelung",
+   "city": "基隆",
+   "region": "TaiwanNorth",
+   "countryCode": "TW",
+   "latitude": 25.1276,
+   "longitude": 121.7392,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "Keelung"
+   ]
+  },
+  {
+   "id": "tw_north_taoyuan",
+   "city": "桃园",
+   "region": "TaiwanNorth",
+   "countryCode": "TW",
+   "latitude": 24.9937,
+   "longitude": 121.301,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "桃園",
+    "Taoyuan"
+   ]
+  },
+  {
+   "id": "tw_north_hsinchu",
+   "city": "新竹",
+   "region": "TaiwanNorth",
+   "countryCode": "TW",
+   "latitude": 24.8138,
+   "longitude": 120.9675,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "Hsinchu"
+   ]
+  },
+  {
+   "id": "tw_central_taichung",
+   "city": "台中",
+   "region": "TaiwanCentral",
+   "countryCode": "TW",
+   "latitude": 24.1477,
+   "longitude": 120.6736,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "臺中",
+    "Taichung"
+   ]
+  },
+  {
+   "id": "tw_south_chiayi",
+   "city": "嘉义",
+   "region": "TaiwanSouth",
+   "countryCode": "TW",
+   "latitude": 23.4801,
+   "longitude": 120.4491,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "嘉義",
+    "Chiayi"
+   ]
+  },
+  {
+   "id": "tw_south_tainan",
+   "city": "台南",
+   "region": "TaiwanSouth",
+   "countryCode": "TW",
+   "latitude": 22.9999,
+   "longitude": 120.227,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "臺南",
+    "Tainan"
+   ]
+  },
+  {
+   "id": "tw_south_kaohsiung",
+   "city": "高雄",
+   "region": "TaiwanSouth",
+   "countryCode": "TW",
+   "latitude": 22.6273,
+   "longitude": 120.3014,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "Kaohsiung"
+   ]
+  },
+  {
+   "id": "tw_east_hualien",
+   "city": "花莲",
+   "region": "TaiwanEast",
+   "countryCode": "TW",
+   "latitude": 23.9871,
+   "longitude": 121.6015,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "花蓮",
+    "Hualien"
+   ]
+  },
+  {
+   "id": "tw_east_taitung",
+   "city": "台东",
+   "region": "TaiwanEast",
+   "countryCode": "TW",
+   "latitude": 22.7583,
+   "longitude": 121.1444,
+   "timezone": "Asia/Taipei",
+   "aliases": [
+    "臺東",
+    "台東",
+    "Taitung"
+   ]
+  },
+  {
+   "id": "hk_hong_kong",
+   "city": "香港",
+   "region": "HongKong",
+   "countryCode": "HK",
+   "latitude": 22.3193,
+   "longitude": 114.1694,
+   "timezone": "Asia/Hong_Kong",
+   "aliases": [
+    "Hong Kong"
+   ]
+  },
+  {
+   "id": "mo_macau",
+   "city": "澳门",
+   "region": "Macau",
+   "countryCode": "MO",
+   "latitude": 22.1987,
+   "longitude": 113.5439,
+   "timezone": "Asia/Macau",
+   "aliases": [
+    "澳門",
+    "Macau",
+    "Macao"
+   ]
+  },
+  {
+   "id": "cn_north_baotou",
+   "city": "包头",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 40.6574,
+   "longitude": 109.8402,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_ordos",
+   "city": "鄂尔多斯",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 39.6086,
+   "longitude": 109.781,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_chifeng",
+   "city": "赤峰",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 42.2578,
+   "longitude": 118.8869,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_tongliao",
+   "city": "通辽",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 43.6174,
+   "longitude": 122.2632,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_hulunbuir",
+   "city": "呼伦贝尔",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 49.2116,
+   "longitude": 119.7658,
+   "timezone": "Asia/Shanghai",
+   "aliases": [
+    "海拉尔"
+   ]
+  },
+  {
+   "id": "cn_north_ulanhot",
+   "city": "乌兰浩特",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 46.0726,
+   "longitude": 122.0675,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_alxa",
+   "city": "阿拉善左旗",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 38.8331,
+   "longitude": 105.7286,
+   "timezone": "Asia/Shanghai",
+   "aliases": [
+    "巴彦浩特"
+   ]
+  },
+  {
+   "id": "cn_north_tangshan",
+   "city": "唐山",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 39.6309,
+   "longitude": 118.1802,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_baoding",
+   "city": "保定",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 38.8739,
+   "longitude": 115.4646,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_datong",
+   "city": "大同",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 40.0768,
+   "longitude": 113.3001,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_north_zhangjiakou",
+   "city": "张家口",
+   "region": "ChinaNorth",
+   "countryCode": "CN",
+   "latitude": 40.7677,
+   "longitude": 114.8863,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_suzhou",
+   "city": "苏州",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 31.299,
+   "longitude": 120.5853,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_wuxi",
+   "city": "无锡",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 31.4912,
+   "longitude": 120.3119,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_xuzhou",
+   "city": "徐州",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 34.2058,
+   "longitude": 117.2841,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_wenzhou",
+   "city": "温州",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 27.9938,
+   "longitude": 120.6994,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_quanzhou",
+   "city": "泉州",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 24.8741,
+   "longitude": 118.6759,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_yantai",
+   "city": "烟台",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 37.4638,
+   "longitude": 121.4479,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_wuhu",
+   "city": "芜湖",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 31.3526,
+   "longitude": 118.4331,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_east_ganzhou",
+   "city": "赣州",
+   "region": "ChinaEast",
+   "countryCode": "CN",
+   "latitude": 25.8311,
+   "longitude": 114.933,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_shantou",
+   "city": "汕头",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 23.3541,
+   "longitude": 116.682,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_zhanjiang",
+   "city": "湛江",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 21.2707,
+   "longitude": 110.3594,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_dongguan",
+   "city": "东莞",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 23.0207,
+   "longitude": 113.7518,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_guilin",
+   "city": "桂林",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 25.2742,
+   "longitude": 110.29,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_liuzhou",
+   "city": "柳州",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 24.3264,
+   "longitude": 109.4281,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_south_baise",
+   "city": "百色",
+   "region": "ChinaSouth",
+   "countryCode": "CN",
+   "latitude": 23.9025,
+   "longitude": 106.618,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_central_luoyang",
+   "city": "洛阳",
+   "region": "ChinaCentral",
+   "countryCode": "CN",
+   "latitude": 34.6197,
+   "longitude": 112.454,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_central_yichang",
+   "city": "宜昌",
+   "region": "ChinaCentral",
+   "countryCode": "CN",
+   "latitude": 30.6919,
+   "longitude": 111.2865,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_central_xiangyang",
+   "city": "襄阳",
+   "region": "ChinaCentral",
+   "countryCode": "CN",
+   "latitude": 32.009,
+   "longitude": 112.1225,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_central_hengyang",
+   "city": "衡阳",
+   "region": "ChinaCentral",
+   "countryCode": "CN",
+   "latitude": 26.8932,
+   "longitude": 112.572,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_central_huaihua",
+   "city": "怀化",
+   "region": "ChinaCentral",
+   "countryCode": "CN",
+   "latitude": 27.5501,
+   "longitude": 109.9985,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_mianyang",
+   "city": "绵阳",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 31.4675,
+   "longitude": 104.6791,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_nanchong",
+   "city": "南充",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 30.8378,
+   "longitude": 106.1107,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_yibin",
+   "city": "宜宾",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 28.7518,
+   "longitude": 104.6417,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_xichang",
+   "city": "西昌",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 27.8946,
+   "longitude": 102.2644,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_kangding",
+   "city": "康定",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 30.0491,
+   "longitude": 101.9643,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_zunyi",
+   "city": "遵义",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 27.7254,
+   "longitude": 106.9272,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_dali",
+   "city": "大理",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 25.6065,
+   "longitude": 100.2676,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_lijiang",
+   "city": "丽江",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 26.8721,
+   "longitude": 100.2299,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_jinghong",
+   "city": "景洪",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 22.0078,
+   "longitude": 100.7974,
+   "timezone": "Asia/Shanghai",
+   "aliases": [
+    "西双版纳"
+   ]
+  },
+  {
+   "id": "cn_southwest_qujing",
+   "city": "曲靖",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 25.49,
+   "longitude": 103.7962,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_shigatse",
+   "city": "日喀则",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 29.267,
+   "longitude": 88.8811,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_qamdo",
+   "city": "昌都",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 31.1405,
+   "longitude": 97.1785,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_nyingchi",
+   "city": "林芝",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 29.649,
+   "longitude": 94.3615,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_nagqu",
+   "city": "那曲",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 31.4762,
+   "longitude": 92.0514,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_southwest_ngari",
+   "city": "阿里",
+   "region": "ChinaSouthwest",
+   "countryCode": "CN",
+   "latitude": 32.5032,
+   "longitude": 80.1055,
+   "timezone": "Asia/Shanghai",
+   "aliases": [
+    "狮泉河",
+    "噶尔"
+   ]
+  },
+  {
+   "id": "cn_northwest_kashgar",
+   "city": "喀什",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 39.4704,
+   "longitude": 75.9898,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_yining",
+   "city": "伊宁",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 43.9168,
+   "longitude": 81.324,
+   "timezone": "Asia/Shanghai",
+   "aliases": [
+    "伊犁"
+   ]
+  },
+  {
+   "id": "cn_northwest_hami",
+   "city": "哈密",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 42.8185,
+   "longitude": 93.515,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_hotan",
+   "city": "和田",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 37.1143,
+   "longitude": 79.9225,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_aksu",
+   "city": "阿克苏",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 41.1681,
+   "longitude": 80.2606,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_korla",
+   "city": "库尔勒",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 41.7259,
+   "longitude": 86.1746,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_karamay",
+   "city": "克拉玛依",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 45.5799,
+   "longitude": 84.8892,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_shihezi",
+   "city": "石河子",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 44.306,
+   "longitude": 86.08,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_altay",
+   "city": "阿勒泰",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 47.8449,
+   "longitude": 88.1396,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_golmud",
+   "city": "格尔木",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 36.4069,
+   "longitude": 94.903,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_yushu",
+   "city": "玉树",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 33.0048,
+   "longitude": 97.0065,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_jiuquan",
+   "city": "酒泉",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 39.7323,
+   "longitude": 98.4945,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_jiayuguan",
+   "city": "嘉峪关",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 39.772,
+   "longitude": 98.2893,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_dunhuang",
+   "city": "敦煌",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 40.1421,
+   "longitude": 94.6618,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_zhangye",
+   "city": "张掖",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 38.9259,
+   "longitude": 100.4497,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_tianshui",
+   "city": "天水",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 34.5809,
+   "longitude": 105.7249,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_yulin",
+   "city": "榆林",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 38.2852,
+   "longitude": 109.7341,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northwest_hanzhong",
+   "city": "汉中",
+   "region": "ChinaNorthwest",
+   "countryCode": "CN",
+   "latitude": 33.0676,
+   "longitude": 107.023,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_qiqihar",
+   "city": "齐齐哈尔",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 47.3543,
+   "longitude": 123.918,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_jiamusi",
+   "city": "佳木斯",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 46.7998,
+   "longitude": 130.3189,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_mudanjiang",
+   "city": "牡丹江",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 44.5524,
+   "longitude": 129.6327,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_daqing",
+   "city": "大庆",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 46.5893,
+   "longitude": 125.1036,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_heihe",
+   "city": "黑河",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 50.2453,
+   "longitude": 127.5285,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_mohe",
+   "city": "漠河",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 52.9725,
+   "longitude": 122.5385,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_jilin_city",
+   "city": "吉林市",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 43.8378,
+   "longitude": 126.5494,
+   "timezone": "Asia/Shanghai",
+   "aliases": [
+    "吉林"
+   ]
+  },
+  {
+   "id": "cn_northeast_yanji",
+   "city": "延吉",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 42.9047,
+   "longitude": 129.5132,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_dandong",
+   "city": "丹东",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 40.0004,
+   "longitude": 124.3545,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  },
+  {
+   "id": "cn_northeast_jinzhou",
+   "city": "锦州",
+   "region": "ChinaNortheast",
+   "countryCode": "CN",
+   "latitude": 41.0951,
+   "longitude": 121.127,
+   "timezone": "Asia/Shanghai",
+   "aliases": []
+  }
+ ]
+}

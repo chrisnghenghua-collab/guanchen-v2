@@ -1,0 +1,44 @@
+{
+ "schema": "GUANCHEN_P2_CALC_CROSSCHECK/1.0.0",
+ "node": "v22.23.4",
+ "total": 1604,
+ "stats": {
+  "MATCH": 1574,
+  "SKIP_RANGE": 13,
+  "EDGE_ONLY": 17,
+  "issue:TZ_SECONDS@LMT": 11,
+  "issue:YEAR@JIE_EDGE": 4,
+  "issue:MONTH@JIE_EDGE": 5,
+  "issue:LUCK_DIR@JIE_EDGE": 4,
+  "issue:LUCK_SEQ@JIE_EDGE": 5,
+  "issue:LUCK_MIN@JIE_EDGE": 1,
+  "issue:DAYHOUR@HOUR_EDGE": 1
+ },
+ "byKind": {
+  "RANDOM": {
+   "MATCH": 683,
+   "SKIP_RANGE": 11,
+   "EDGE_ONLY": 6
+  },
+  "JIE_BOUNDARY": {
+   "MATCH": 398,
+   "EDGE_ONLY": 6
+  },
+  "HOUR_EDGE": {
+   "MATCH": 193,
+   "SKIP_RANGE": 2,
+   "EDGE_ONLY": 5
+  },
+  "HISTORIC_TZ": {
+   "MATCH": 300
+  }
+ },
+ "trueSolarDeltaSec": {
+  "maxAbs": 4,
+  "mean": 0
+ },
+ "luckMinutesDelta": {
+  "maxAbs": 45226
+ },
+ "mismatches": []
+}

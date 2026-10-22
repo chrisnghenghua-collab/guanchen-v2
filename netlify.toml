@@ -1,0 +1,22 @@
+# GUANCHEN V2 - Netlify configuration (P5, 2026-10-23).
+# Only the two v2 endpoints are deployed. The old interface lives in engine/legacy/ and is used by tests only.
+[build]
+  base = "engine"
+  publish = "public"
+  command = "echo GUANCHEN: no build step"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+[functions]
+  directory = "netlify/functions"
+  # The engine imports .ts files directly (Node 24 strips types) and reads its data/copy files from disk,
+  # so these folders are shipped as-is next to the functions.
+  included_files = ["api/**", "interpretation/**", "packages/**", "server/**", "src/**"]
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
+    X-Frame-Options = "DENY"

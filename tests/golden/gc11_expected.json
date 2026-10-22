@@ -1,0 +1,146 @@
+{
+ "source": "GC11_REPORT_20261020_231934 (Windows, Node v24.13.0, GC10REC S7 candidate providerSha256 77e58047...)",
+ "note": "Byte-identical response bodies expected while behaviour is intentionally unchanged. Regenerate only with an approved behaviour change.",
+ "cases": {
+  "HTTP-01a": {
+   "status": 200,
+   "bodySha256": "c25e553600fcd0d72674591235e4e7d44a30bafecae8406a59a84046c2bef123"
+  },
+  "HTTP-01b": {
+   "status": 200,
+   "bodySha256": "12c06b4663996e743ceba1d53ff0f6dd44b940dc0561d26f03ddf5b4585e9e57"
+  },
+  "HTTP-01c": {
+   "status": 200,
+   "bodySha256": "7e83d1270c9ee396bca2485e9ae092de68a8d4fa1bd511e198ca3a70da895377"
+  },
+  "HTTP-01d": {
+   "status": 200,
+   "bodySha256": "6a903d1ba0a7bfa46e4344b45e403aeeedfb11249c3bbbe65475b396726488c6"
+  },
+  "HTTP-01e": {
+   "status": 200,
+   "bodySha256": "a04357589bd18774116a4a686d6754ae2cefa2c4ae71810c47e9d36ffec65fa1"
+  },
+  "HTTP-02a": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-02b": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-02c": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-03a": {
+   "status": 200,
+   "bodySha256": "65cf1daa734376e248b02f101c9c9f6996a8445a9fa864554f956fea4207fd9e"
+  },
+  "HTTP-03b": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-04a": {
+   "status": 200,
+   "bodySha256": "cf0a949cda8cf2272ce1a8d9a106afbb02ffcf08053ea1b53fb323eff1422f7a"
+  },
+  "HTTP-04b": {
+   "status": 200,
+   "bodySha256": "cf0a949cda8cf2272ce1a8d9a106afbb02ffcf08053ea1b53fb323eff1422f7a"
+  },
+  "HTTP-05a": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-05b": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-05c": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-05d": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-05e": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-05f": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-05g": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-05h": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-05i": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-06a": {
+   "status": 405,
+   "bodySha256": "7447fca973e3e1440a525617cc05355f51b820f85464cb42d2cde2dbe826a458"
+  },
+  "HTTP-06b": {
+   "status": 415,
+   "bodySha256": "99a0cbc2106ad997d57a01f425be7ae9847eead9bf2a64e2b857278b16131d8c"
+  },
+  "HTTP-06c": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-06d": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-06e": {
+   "status": 413,
+   "bodySha256": "5a1b5ae758a1d45156e124cbf0b0a0957c8976dfb044c7fc050d7c0f8fe31f9e"
+  },
+  "HTTP-06f": {
+   "status": 400,
+   "bodySha256": "0e5abbd11464fcd0c826159dac8d685f0b6963d21f7b897b12e62b21c66dce38"
+  },
+  "HTTP-07a": {
+   "status": 200,
+   "bodySha256": "c25e553600fcd0d72674591235e4e7d44a30bafecae8406a59a84046c2bef123"
+  },
+  "HTTP-07b": {
+   "status": 200,
+   "bodySha256": "12c06b4663996e743ceba1d53ff0f6dd44b940dc0561d26f03ddf5b4585e9e57"
+  },
+  "HTTP-07c": {
+   "status": 200,
+   "bodySha256": "c25e553600fcd0d72674591235e4e7d44a30bafecae8406a59a84046c2bef123"
+  }
+ },
+ "changes": [
+  {
+   "date": "2026-10-22",
+   "case": "HTTP-01d",
+   "from": "aa0b22c8913f28b65bd3d4e0a9925614cac3c3cd8398de6c10e918e4590d0aa6",
+   "to": "6a903d1ba0a7bfa46e4344b45e403aeeedfb11249c3bbbe65475b396726488c6",
+   "reason": "D-01 approved by Chris: 子初换日. True solar 2001-09-29 23:11:31 -> day pillar 乙未 becomes 丙申 (hour 戊子 unchanged). Verified on 800 random charts: only true-solar-23:00 births change."
+  },
+  {
+   "date": "2026-10-23",
+   "cases": [
+    "HTTP-01a",
+    "HTTP-01b",
+    "HTTP-07a",
+    "HTTP-07b",
+    "HTTP-07c"
+   ],
+   "reason": "Privacy: the historical base fixture was real birth data and the 1988 Singapore fixture was replaced too, before uploading to GitHub. Inputs changed to fictional 1990-03-14 15:20 KL male / 1985-09-27 08:10 Singapore female. Immediately before the swap the guard passed byte-identical on Chris Windows (2026-10-23 00:10). Only these cases use the swapped birth data; engine unchanged."
+  }
+ ]
+}

@@ -1,0 +1,216 @@
+{
+  "accessibility": {
+    "colorOnlyStatusAllowed": false,
+    "pageHeadingRequired": true,
+    "reducedMotionRequired": true,
+    "routeFocusTarget": "PAGE_H1"
+  },
+  "availabilityUx": {
+    "AVAILABLE": {
+      "answerRule": "CARRY_SOURCE_ANSWER",
+      "contentMode": "COMPLETE_SOURCE_RESULT",
+      "stateRule": "CARRY_SOURCE_STATE",
+      "statusCode": "RESULT_AVAILABLE"
+    },
+    "ERROR": {
+      "answerRule": "MUST_BE_NULL",
+      "contentMode": "NO_INTERPRETATION_CONTENT",
+      "stateRule": "MUST_BE_NULL",
+      "statusCode": "RESULT_ERROR"
+    },
+    "PARTIAL": {
+      "answerRule": "CARRY_ONLY_IF_PRESENT",
+      "contentMode": "PARTIAL_SOURCE_ONLY",
+      "stateRule": "CARRY_ONLY_IF_PRESENT",
+      "statusCode": "RESULT_PARTIAL"
+    },
+    "UNAVAILABLE": {
+      "answerRule": "MUST_BE_NULL",
+      "contentMode": "NO_INTERPRETATION_CONTENT",
+      "stateRule": "MUST_BE_NULL",
+      "statusCode": "RESULT_UNAVAILABLE"
+    }
+  },
+  "birthRequest": {
+    "calendarVocabulary": [
+      "GREGORIAN"
+    ],
+    "exactFields": [
+      "birth.calendar",
+      "birth.date",
+      "birth.timeKnowledge",
+      "birth.time",
+      "birth.gender",
+      "birth.location",
+      "asOfLocal"
+    ],
+    "genderVocabulary": [
+      "MALE",
+      "FEMALE"
+    ],
+    "requestType": "GUANCHEN_PRODUCT_RESULT_REQUEST",
+    "requestVersion": "1.0.0",
+    "timeKnowledgeVocabulary": [
+      "KNOWN",
+      "PARTIAL",
+      "UNKNOWN"
+    ],
+    "transport": "INJECTED_NOT_SELECTED_BY_A2"
+  },
+  "dependencies": {
+    "pinnedExactVersions": true,
+    "react": {
+      "name": "react",
+      "version": "19.3.0",
+      "delivery": "LOCAL_BUNDLE"
+    },
+    "reactDomClient": {
+      "name": "react-dom/client",
+      "version": "19.3.0",
+      "delivery": "LOCAL_BUNDLE"
+    },
+    "reactRouter": {
+      "name": "react-router",
+      "version": "8.4.0",
+      "delivery": "LOCAL_BUNDLE"
+    },
+    "remoteRuntimeDependency": false,
+    "vendorBundlingRequired": true,
+    "externalRuntimeCdnAllowed": false
+  },
+  "domainRoutes": {
+    "career": "CAREER",
+    "relationship": "RELATIONSHIP",
+    "wealth": "WEALTH",
+    "wellbeing": "WELLBEING"
+  },
+  "framework": {
+    "architecture": "CLIENT_SIDE_SPA",
+    "react": "19.3.0",
+    "reactRouter": "8.4.0",
+    "rendering": "CLIENT_SIDE_ONLY"
+  },
+  "monthlyQuestionIds": [
+    "CAREER_NEXT_6M",
+    "WEALTH_NEXT_12M"
+  ],
+  "presentationPhases": [
+    "IDLE",
+    "LOADING",
+    "EMPTY",
+    "REQUEST_ERROR",
+    "READY"
+  ],
+  "publicAdapter": {
+    "answerRewriteAllowed": false,
+    "availabilityInferenceAllowed": false,
+    "availabilityVocabulary": [
+      "AVAILABLE",
+      "PARTIAL",
+      "UNAVAILABLE",
+      "ERROR"
+    ],
+    "domainOrder": [
+      "CAREER",
+      "WEALTH",
+      "RELATIONSHIP",
+      "WELLBEING"
+    ],
+    "frozenQuestionCount": 20,
+    "schemaId": "GUANCHEN_PUBLIC_PRODUCT_RESULT",
+    "schemaVersion": "1.0.0",
+    "stateReResolutionAllowed": false,
+    "timingInferenceAllowed": false,
+    "topLevelNamespaces": [
+      "contract",
+      "chart",
+      "timing",
+      "domains",
+      "availability",
+      "provenance"
+    ]
+  },
+  "publicResultEmbeddedInBuild": false,
+  "responsive": {
+    "horizontalPageScrollAllowed": false,
+    "minimumPointerTargetCssPx": 24,
+    "minimumReflowWidthCssPx": 320,
+    "profiles": [
+      {
+        "id": "COMPACT",
+        "maxColumns": 1,
+        "maxCssPx": 599,
+        "minCssPx": 0,
+        "navigationMode": "STACKED"
+      },
+      {
+        "id": "MEDIUM",
+        "maxColumns": 2,
+        "maxCssPx": 1023,
+        "minCssPx": 600,
+        "navigationMode": "WRAPPED"
+      },
+      {
+        "id": "WIDE",
+        "maxColumns": 2,
+        "maxCssPx": null,
+        "minCssPx": 1024,
+        "navigationMode": "DISTRIBUTED"
+      }
+    ]
+  },
+  "resultContextPersistence": "IN_MEMORY_ONLY",
+  "resultRequestBinding": "INJECTED_RUNTIME_PORT",
+  "routes": [
+    {
+      "id": "ENTRY",
+      "path": "/",
+      "requiresPublicResult": false,
+      "routePattern": "/",
+      "surface": "ENTRY"
+    },
+    {
+      "id": "BIRTH_INPUT",
+      "path": "/birth",
+      "requiresPublicResult": false,
+      "routePattern": "/birth",
+      "surface": "BIRTH_INPUT"
+    },
+    {
+      "id": "RESULT_OVERVIEW",
+      "path": "/result",
+      "requiresPublicResult": true,
+      "routePattern": "/result",
+      "surface": "RESULT_OVERVIEW"
+    },
+    {
+      "id": "RESULT_CHART",
+      "path": "/result/chart",
+      "requiresPublicResult": true,
+      "routePattern": "/result/chart",
+      "surface": "CHART_OVERVIEW"
+    },
+    {
+      "id": "RESULT_TIMING",
+      "path": "/result/timing",
+      "requiresPublicResult": true,
+      "routePattern": "/result/timing",
+      "surface": "TIMING_OVERVIEW"
+    },
+    {
+      "id": "RESULT_DOMAIN",
+      "path": "/result/{domain}",
+      "requiresPublicResult": true,
+      "routePattern": "/result/:domain",
+      "surface": "DOMAIN_OVERVIEW"
+    },
+    {
+      "id": "RESULT_QUESTION",
+      "path": "/result/{domain}/{questionId}",
+      "requiresPublicResult": true,
+      "routePattern": "/result/:domain/:questionId",
+      "surface": "QUESTION_DETAIL"
+    }
+  ],
+  "version": "GUANCHEN_RUNTIME_UI_CONTRACT/1.0.0"
+}

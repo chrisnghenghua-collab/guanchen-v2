@@ -1,0 +1,16 @@
+{
+  "name": "guanchen-engine",
+  "version": "2.0.0-p4",
+  "private": true,
+  "type": "module",
+  "description": "GUANCHEN calculation + interpretation engine. Origin: D:\\GUANCHEN_WEB\\repo @ 67d45035 (82 runtime files, 2026-10-21). P1-b: self-hash freeze locks removed, 20 retired gate JSONs deleted, Netlify entry points at engine.",
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "astronomy-engine": "2.1.19",
+    "moment": "2.31.0",
+    "moment-timezone": "0.6.3",
+    "tyme4ts": "1.5.2"
+  }
+}

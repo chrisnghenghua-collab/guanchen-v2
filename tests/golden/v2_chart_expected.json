@@ -1,0 +1,14 @@
+{
+ "note": "Hashes of the v2 chart section (calculation only, copy excluded). Regenerate with --update only after an approved calculation change.",
+ "updated": "2026-10-22T16:20:33.749Z",
+ "cases": {
+  "V2-01a": "3aa58ad023bd8007c82726edb912bd14f9875212d94a5413764abb9ec65cc216",
+  "V2-01b": "b02d55b662b8b010c5c0e3b9c115a0ca28e14f5723f6a6c0ddac0ae5ef47e409",
+  "V2-01c": "3a4be0638fdfffd81dc55d70a70a5e1d84dfec741a64cd0d7a7e2f481919f1f3",
+  "V2-01d": "901453aa10853a15c748e98306034c5851ff049e795ab0a932e68b5ab83822f6",
+  "V2-01e": "9ca8868bdeda08439e6c41756bb41b6c67f845d9e056e8e6f5b2c0aeb80c50e4",
+  "V2-01f": "52cebc6d43399aa29701c3854e303ce0410f4e4cfe8e9c00d0ed2b5722aeac51",
+  "V2-02": "2bc82f844ec05898d22ad4001defefae5d16e65f4136528e51b23df8bda933b9"
+ },
+ "lastChange": "2026-10-23: V2-01a/V2-01b inputs replaced with fictional birth data (privacy, before GitHub upload). Engine unchanged; other cases have unchanged inputs."
+}

@@ -1,0 +1,8 @@
+node_modules/
+.netlify/
+.env
+.env.*
+tests/*.log
+tests/last-run/
+tests/last-p2/
+_tmp_claude/
