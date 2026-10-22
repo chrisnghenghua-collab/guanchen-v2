@@ -66,6 +66,7 @@
 
 ## 8. 变更记录
 - 2026-10-22 API v2：新增 `engine\api\`（reading-service.mjs、http-handler.mjs）、`engine\netlify\functions\reading.mjs`、`tests\v2_api.mjs`、`tests\golden\v2_chart_expected.json`、`tools\copy_add.py`（只新增、不覆盖文案）；文案表新增 29 条（全局免责、错误提示、命盘总览）。旧接口未改动。
+- 2026-10-23 P5 第三次修正：第二次修正部署后，模块已能加载，但出现 `handler is not a function`——`node_bundler = "nft"` 使 Netlify 把函数当成旧式（v1）函数。移除该行，恢复默认打包；引擎改为运行时加载后已不会被合并。
 - 2026-10-23 P5 第二次修正（`node_bundler = "nft"` 未生效，函数仍被合并成一个文件、仍 502）：①两个函数入口改为运行时按计算出的路径加载引擎（打包工具无法合并），引擎文件经 `included_files` 原样带上；②计算核心三个文件（`astronomyEquationOfTime.ts`、`solarTerms.ts`、`lunarCalendar.ts`）只改第一行的库引用方式，使 astronomy-engine / tyme4ts 不论以 ES module 或 CommonJS 加载都能取得同一组函数；计算逻辑未改。证明：v2 42/42（golden 逐字节相同）、10/10、交叉核对 1574 一致 0 不一致、旧接口逐字节相同、P3 分布、P4 模型均 PASS。③**临时**诊断：请求带 `x-guanchen-diag: 1` 时，500 回应附上错误首行（`diag`），P5 通过后移除。
 - 2026-10-23 P5 Netlify 第一次部署：首页正常、旧接口确认未部署；两个函数 502（Netlify 默认打包把引擎合成一个文件，astronomy-engine 被当成 CommonJS 加载：`Named export 'Body' not found`）。网站一开始有访客限制（401），Chris 已在该项目改为公开。修正：`netlify.toml` 加 `node_bundler = "nft"`（不打包，保持原目录结构）并列出四个依赖库；程序代码未改。
 - 2026-10-23 P5 GitHub：首次上传 main @ `f04fc79`。Windows 上 Git 登录小窗口（SkiaSharp）无法打开，改用浏览器登录：`credential.guiPrompt false`、`credential.gitHubAuthModes browser`（全局设定）。

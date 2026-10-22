@@ -10,10 +10,9 @@
 
 [functions]
   directory = "netlify/functions"
-  # Do NOT bundle (2026-10-23 fix): the default bundler merged the engine into one file, which loaded
-  # astronomy-engine as CommonJS (502 "Named export 'Body' not found") and would also break the
-  # import.meta.url reads of the copy/location tables. "nft" keeps every file at its original path.
-  node_bundler = "nft"
+  # Default bundler on purpose (2026-10-23): node_bundler = "nft" made Netlify treat these as old-style
+  # functions ("handler is not a function"). The engine is no longer merged into the function file because
+  # the function loads it at run time from a computed path (see netlify/functions/*.mjs).
   # The engine imports .ts files directly (Node 24 strips types) and reads its data/copy files from disk,
   # so these folders and the four pinned libraries are shipped as-is next to the functions.
   included_files = ["api/**", "interpretation/**", "packages/**", "server/**", "src/**",
