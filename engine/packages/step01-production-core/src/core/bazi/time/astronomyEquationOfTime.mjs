@@ -1,5 +1,8 @@
 // Converted from astronomyEquationOfTime.ts on 2026-10-23 with Node stripTypeScriptTypes (type annotations removed, code unchanged).
-import * as AstronomyNS from "astronomy-engine";
+import { createRequire } from "node:module";
+// Load astronomy-engine's CommonJS build explicitly (same library, same version 2.1.19). Its ESM build (esm/astronomy.js)
+// has no "type": "module" marker and only works where Node guesses the format; Netlify's runtime does not (2026-10-23).
+const AstronomyNS = createRequire(import.meta.url)("astronomy-engine");
 // Works whether the host loads astronomy-engine as ES module or as CommonJS (Netlify, 2026-10-23). Same functions either way.
 const Astronomy      = "Body" in AstronomyNS ? AstronomyNS : (AstronomyNS       ).default;
 const { Body, Equator, Observer, SiderealTime } = Astronomy;

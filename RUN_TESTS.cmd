@@ -3,7 +3,8 @@ rem GUANCHEN V2 - full verification. Read-only on engine; writes only tests\last
 cd /d "%~dp0"
 set FAIL=0
 echo ===== 1/6 New API v2 contract (42 real requests incl. time estimate) =====
-node tests\v2_api.mjs > tests\v2_api.log 2>&1
+rem --no-experimental-detect-module: same strict module loading as the Netlify runtime (2026-10-23)
+node --no-experimental-detect-module tests\v2_api.mjs > tests\v2_api.log 2>&1
 if errorlevel 1 (set FAIL=1)
 findstr /B "V2_API" tests\v2_api.log
 echo ===== 2/6 Interpretation quality (500 charts x 20 questions) =====
