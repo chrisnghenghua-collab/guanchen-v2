@@ -1,6 +1,7 @@
+// Converted from solarTerms.ts on 2026-10-23 with Node stripTypeScriptTypes (type annotations removed, code unchanged).
 import * as AstronomyNS from "astronomy-engine";
 // Works whether the host loads astronomy-engine as ES module or as CommonJS (Netlify, 2026-10-23). Same function either way.
-const { SearchSunLongitude } = ("SearchSunLongitude" in AstronomyNS ? AstronomyNS : (AstronomyNS as any).default) as any;
+const { SearchSunLongitude } = ("SearchSunLongitude" in AstronomyNS ? AstronomyNS : (AstronomyNS       ).default)       ;
 
 export const SOLAR_TERMS = [
   { name: "小寒", longitude: 285, approxMonth: 1, approxDay: 5, kind: "JIE" },
@@ -27,26 +28,26 @@ export const SOLAR_TERMS = [
   { name: "小雪", longitude: 240, approxMonth: 11, approxDay: 22, kind: "ZHONG_QI" },
   { name: "大雪", longitude: 255, approxMonth: 12, approxDay: 7, kind: "JIE" },
   { name: "冬至", longitude: 270, approxMonth: 12, approxDay: 21, kind: "ZHONG_QI" },
-] as const;
+]         ;
 
-export type SolarTermName = typeof SOLAR_TERMS[number]["name"];
-export type SolarTermKind = typeof SOLAR_TERMS[number]["kind"];
-export type SolarTermInstant = {
-  name: SolarTermName;
-  longitude: number;
-  kind: SolarTermKind;
-  gregorianYear: number;
-  instantMs: number;
-};
+                                                               
+                                                               
+                                
+                      
+                    
+                      
+                        
+                    
+  
 
-const TERM_BY_NAME = new Map<SolarTermName, typeof SOLAR_TERMS[number]>(
+const TERM_BY_NAME = new Map                                           (
   SOLAR_TERMS.map((x) => [x.name, x])
 );
 
-const TERM_CACHE = new Map<string, SolarTermInstant>();
-const JIE_YEAR_CACHE = new Map<number, SolarTermInstant[]>();
+const TERM_CACHE = new Map                          ();
+const JIE_YEAR_CACHE = new Map                            ();
 
-export function solarTermDefinition(name: SolarTermName) {
+export function solarTermDefinition(name               ) {
   const term = TERM_BY_NAME.get(name);
   if (!term) throw new Error(`Unknown solar term: ${name}`);
   return term;
@@ -58,7 +59,7 @@ export function solarTermDefinition(name: SolarTermName) {
  * of each term. This keeps SearchSunLongitude inside its recommended small
  * search interval while still covering natural year-to-year drift.
  */
-export function solarTermInstantUtc(gregorianYear: number, name: SolarTermName): SolarTermInstant {
+export function solarTermInstantUtc(gregorianYear        , name               )                   {
   if (!Number.isInteger(gregorianYear) || gregorianYear < 1 || gregorianYear > 9999) {
     throw new Error(`Invalid Gregorian year: ${gregorianYear}`);
   }
@@ -81,11 +82,11 @@ export function solarTermInstantUtc(gregorianYear: number, name: SolarTermName):
   return value;
 }
 
-export function solarTermsForGregorianYear(gregorianYear: number): SolarTermInstant[] {
+export function solarTermsForGregorianYear(gregorianYear        )                     {
   return SOLAR_TERMS.map((x) => solarTermInstantUtc(gregorianYear, x.name));
 }
 
-export function jieTermsForGregorianYear(gregorianYear: number): SolarTermInstant[] {
+export function jieTermsForGregorianYear(gregorianYear        )                     {
   const cached = JIE_YEAR_CACHE.get(gregorianYear);
   if (cached) return cached;
   const value = SOLAR_TERMS
@@ -95,11 +96,11 @@ export function jieTermsForGregorianYear(gregorianYear: number): SolarTermInstan
   return value;
 }
 
-export function liChunInstantUtc(gregorianYear: number): number {
+export function liChunInstantUtc(gregorianYear        )         {
   return solarTermInstantUtc(gregorianYear, "立春").instantMs;
 }
 
-function surroundingJie(instantMs: number): SolarTermInstant[] {
+function surroundingJie(instantMs        )                     {
   if (!Number.isFinite(instantMs)) throw new Error("Invalid instant");
   const year = new Date(instantMs).getUTCFullYear();
   return [year - 1, year, year + 1]
@@ -108,7 +109,7 @@ function surroundingJie(instantMs: number): SolarTermInstant[] {
 }
 
 /** Active Jie uses a half-open boundary: exact Jie instant belongs to the new month. */
-export function activeJieAtInstant(instantMs: number): SolarTermInstant {
+export function activeJieAtInstant(instantMs        )                   {
   const list = surroundingJie(instantMs).filter((x) => x.instantMs <= instantMs);
   const value = list.at(-1);
   if (!value) throw new Error("ACTIVE_JIE_NOT_FOUND");
@@ -116,14 +117,14 @@ export function activeJieAtInstant(instantMs: number): SolarTermInstant {
 }
 
 /** Strict previous/next Jie are used for Dayun target selection. */
-export function strictPreviousJie(instantMs: number): SolarTermInstant {
+export function strictPreviousJie(instantMs        )                   {
   const list = surroundingJie(instantMs).filter((x) => x.instantMs < instantMs);
   const value = list.at(-1);
   if (!value) throw new Error("PREVIOUS_JIE_NOT_FOUND");
   return value;
 }
 
-export function strictNextJie(instantMs: number): SolarTermInstant {
+export function strictNextJie(instantMs        )                   {
   const value = surroundingJie(instantMs).find((x) => x.instantMs > instantMs);
   if (!value) throw new Error("NEXT_JIE_NOT_FOUND");
   return value;

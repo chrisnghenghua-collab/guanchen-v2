@@ -1,24 +1,25 @@
+// Converted from lunarCalendar.ts on 2026-10-23 with Node stripTypeScriptTypes (type annotations removed, code unchanged).
 import * as TymeNS from "tyme4ts";
 // Works whether the host loads tyme4ts as ES module or as CommonJS (Netlify, 2026-10-23). Same classes either way.
-const { LunarDay, LunarYear, SolarDay } = ("SolarDay" in TymeNS ? TymeNS : (TymeNS as any).default) as any;
-import type { CivilDate } from "./gregorian.ts";
+const { LunarDay, LunarYear, SolarDay } = ("SolarDay" in TymeNS ? TymeNS : (TymeNS       ).default)       ;
+                                                
 
-export type LunarDate = {
-  year: number;
-  month: number;
-  day: number;
-  isLeapMonth: boolean;
-};
+                         
+               
+                
+              
+                       
+  
 
-export type LunarConversionResult =
-  | { status: "OK"; solar: CivilDate; lunar: LunarDate }
-  | { status: "INVALID_LUNAR_DATE"; message: string };
+                                   
+                                                        
+                                                      
 
-export function leapMonthOfLunarYear(year: number): number {
+export function leapMonthOfLunarYear(year        )         {
   return LunarYear.fromYear(year).getLeapMonth();
 }
 
-export function solarToLunar(date: CivilDate): LunarDate {
+export function solarToLunar(date           )            {
   const lunar = SolarDay.fromYmd(date.year, date.month, date.day).getLunarDay();
   const month = lunar.getLunarMonth();
   return {
@@ -29,7 +30,7 @@ export function solarToLunar(date: CivilDate): LunarDate {
   };
 }
 
-export function lunarToSolar(date: LunarDate): LunarConversionResult {
+export function lunarToSolar(date           )                        {
   try {
     const signedMonth = date.isLeapMonth ? -Math.abs(date.month) : Math.abs(date.month);
     const lunar = LunarDay.fromYmd(date.year, signedMonth, date.day);

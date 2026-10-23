@@ -1,16 +1,16 @@
 // Server orchestration only. Recovered algorithms remain byte-for-byte frozen.
 import { readFileSync } from 'node:fs';
-import { assertCivilDateTime } from './src/core/bazi/calendar/gregorian.ts';
-import { lunarToSolar, solarToLunar } from './src/core/bazi/calendar/lunarCalendar.ts';
-import { baziYearPillarForInstant, baziMonthPillarForInstant, luckTargetJieForInstant } from './src/core/bazi/calendar/authorityCalendar.ts';
-import { resolveLocalDateTimeAuthority, timezoneAuthorityDataVersion } from './src/core/bazi/time/timezoneAuthority.ts';
-import { astronomyEquationOfTimeMinutes } from './src/core/bazi/time/astronomyEquationOfTime.ts';
-import { localApparentSolarDateTime } from './src/core/bazi/time/trueSolarTime.ts';
-import { resolveDayHourPillars } from './src/core/bazi/pillars/dayHour.ts';
-import { luckDirection } from './src/core/bazi/luck/luckDirection.ts';
-import { dayunSequence } from './src/core/bazi/luck/dayunSequence.ts';
-import { intervalMinutesToLuckStartAge, firstLuckStartLocal, dayunBoundaryFromAnchor } from './src/core/bazi/luck/luckStart.ts';
-import { BA_ZI_RULE_AUTHORITY } from './src/core/bazi/authority/ruleAuthority.ts';
+import { assertCivilDateTime } from './src/core/bazi/calendar/gregorian.mjs';
+import { lunarToSolar, solarToLunar } from './src/core/bazi/calendar/lunarCalendar.mjs';
+import { baziYearPillarForInstant, baziMonthPillarForInstant, luckTargetJieForInstant } from './src/core/bazi/calendar/authorityCalendar.mjs';
+import { resolveLocalDateTimeAuthority, timezoneAuthorityDataVersion } from './src/core/bazi/time/timezoneAuthority.mjs';
+import { astronomyEquationOfTimeMinutes } from './src/core/bazi/time/astronomyEquationOfTime.mjs';
+import { localApparentSolarDateTime } from './src/core/bazi/time/trueSolarTime.mjs';
+import { resolveDayHourPillars } from './src/core/bazi/pillars/dayHour.mjs';
+import { luckDirection } from './src/core/bazi/luck/luckDirection.mjs';
+import { dayunSequence } from './src/core/bazi/luck/dayunSequence.mjs';
+import { intervalMinutesToLuckStartAge, firstLuckStartLocal, dayunBoundaryFromAnchor } from './src/core/bazi/luck/luckStart.mjs';
+import { BA_ZI_RULE_AUTHORITY } from './src/core/bazi/authority/ruleAuthority.mjs';
 
 const catalog = JSON.parse(readFileSync(new URL('./data/locations.v2.json', import.meta.url), 'utf8')).records;
 const locations = new Map(catalog.map(row => [row.id, row]));

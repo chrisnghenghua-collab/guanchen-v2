@@ -7,10 +7,10 @@ const E = path.join(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const imp = rel => import(pathToFileURL(path.join(E, rel)).href);
 const fn = await imp('legacy/netlify/functions/result.mjs');
 const C = 'packages/step01-production-core/src/core/bazi/';
-const { baziYearPillarForInstant, baziMonthPillarForInstant } = await imp(C + 'calendar/authorityCalendar.ts');
-const { localApparentSolarDateTime } = await imp(C + 'time/trueSolarTime.ts');
-const { astronomyEquationOfTimeMinutes } = await imp(C + 'time/astronomyEquationOfTime.ts');
-const { resolveDayHourPillars } = await imp(C + 'pillars/dayHour.ts');
+const { baziYearPillarForInstant, baziMonthPillarForInstant } = await imp(C + 'calendar/authorityCalendar.mjs');
+const { localApparentSolarDateTime } = await imp(C + 'time/trueSolarTime.mjs');
+const { astronomyEquationOfTimeMinutes } = await imp(C + 'time/astronomyEquationOfTime.mjs');
+const { resolveDayHourPillars } = await imp(C + 'pillars/dayHour.mjs');
 const cases = [
   ['01', 'cn_north_beijing', 116.4074, '2000-01-01', '12:30', 'MALE', '2000-01-01 12:12:30', '己卯 丙子 戊午 戊午'],
   ['02', 'cn_southwest_chengdu', 104.0665, '2002-07-09', '02:00', 'FEMALE', '2002-07-09 00:51:12', '壬午 丁未 戊寅 壬子'],

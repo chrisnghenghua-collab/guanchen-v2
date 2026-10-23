@@ -10,13 +10,12 @@
 
 [functions]
   directory = "netlify/functions"
-  # Default bundler on purpose (2026-10-23): node_bundler = "nft" made Netlify treat these as old-style
-  # functions ("handler is not a function"). The engine is no longer merged into the function file because
-  # the function loads it at run time from a computed path (see netlify/functions/*.mjs).
-  # The engine imports .ts files directly (Node 24 strips types) and reads its data/copy files from disk,
-  # so these folders and the four pinned libraries are shipped as-is next to the functions.
-  # package.json must ship too: its "type": "module" tells Node 24 that the engine's .ts files are ES modules
-  # (without it the deployed engine failed: "ruleAuthority.ts does not provide an export named ...", 2026-10-23).
+  # Default bundler. The function loads the engine at run time from a computed path (see netlify/functions/*.mjs),
+  # so the engine is not merged into the function file and its import.meta.url file reads keep working.
+  # The engine reads its data/copy files from disk, so these folders and the four pinned libraries are shipped
+  # as-is next to the functions. package.json must ship too ("type": "module").
+  # No .ts files may be shipped: Netlify's packager converts them itself and overwrote the function entry
+  # (all 2026-10-23 deploy failures). The engine's .ts files were converted to .mjs with Node's own type stripping.
   included_files = ["package.json", "api/**", "interpretation/**", "packages/**", "server/**", "src/**",
     "node_modules/astronomy-engine/**", "node_modules/tyme4ts/**", "node_modules/moment-timezone/**", "node_modules/moment/**"]
 

@@ -1,29 +1,30 @@
+// Converted from timezoneAuthority.ts on 2026-10-23 with Node stripTypeScriptTypes (type annotations removed, code unchanged).
 import moment from "moment-timezone";
-import { assertCivilDateTime, type CivilDateTime } from "../calendar/gregorian.ts";
-import { offsetMinutesAtInstant as intlOffsetMinutesAtInstant } from "./timezone.ts";
+import { assertCivilDateTime,                    } from "../calendar/gregorian.mjs";
+import { offsetMinutesAtInstant as intlOffsetMinutesAtInstant } from "./timezone.mjs";
 
-export type AuthorityLocalTimeResolution =
-  | { status: "RESOLVED"; instantMs: number; offsetMinutes: number }
-  | { status: "AMBIGUOUS_LOCAL_TIME"; candidates: Array<{ instantMs: number; offsetMinutes: number }> }
-  | { status: "INVALID_LOCAL_TIME" }
-  | { status: "UNKNOWN_TIMEZONE"; timezoneId: string };
+                                          
+                                                                    
+                                                                                                       
+                                    
+                                                       
 
-export function timezoneAuthorityDataVersion(): string {
+export function timezoneAuthorityDataVersion()         {
   return moment.tz.dataVersion;
 }
 
-function zoneOrNull(zoneId: string) {
+function zoneOrNull(zoneId        ) {
   return moment.tz.zone(zoneId);
 }
 
-export function authorityOffsetMinutesAtInstant(instantMs: number, zoneId: string): number {
+export function authorityOffsetMinutesAtInstant(instantMs        , zoneId        )         {
   const zone = zoneOrNull(zoneId);
   if (!zone) throw new Error(`UNKNOWN_TIMEZONE:${zoneId}`);
   // Moment's Zone#utcOffset is minutes west of UTC. Guancheng uses east-positive.
   return -zone.utcOffset(instantMs);
 }
 
-export function formatInstantInAuthorityZone(instantMs: number, zoneId: string): CivilDateTime {
+export function formatInstantInAuthorityZone(instantMs        , zoneId        )                {
   const zone = zoneOrNull(zoneId);
   if (!zone) throw new Error(`UNKNOWN_TIMEZONE:${zoneId}`);
   const v = moment.utc(instantMs).tz(zoneId);
@@ -33,7 +34,7 @@ export function formatInstantInAuthorityZone(instantMs: number, zoneId: string):
   };
 }
 
-function sameLocal(a: CivilDateTime, b: CivilDateTime): boolean {
+function sameLocal(a               , b               )          {
   return a.year === b.year && a.month === b.month && a.day === b.day && a.hour === b.hour && a.minute === b.minute && (a.second ?? 0) === (b.second ?? 0);
 }
 
@@ -42,14 +43,14 @@ function sameLocal(a: CivilDateTime, b: CivilDateTime): boolean {
  * We do not ask Moment to guess through gaps/overlaps. Instead every distinct
  * zone offset is treated as a candidate and is round-tripped back to local time.
  */
-export function resolveLocalDateTimeAuthority(local: CivilDateTime, zoneId: string): AuthorityLocalTimeResolution {
+export function resolveLocalDateTimeAuthority(local               , zoneId        )                               {
   assertCivilDateTime(local);
   const zone = zoneOrNull(zoneId);
   if (!zone) return { status: "UNKNOWN_TIMEZONE", timezoneId: zoneId };
 
   const naiveMs = Date.UTC(local.year, local.month - 1, local.day, local.hour, local.minute, local.second ?? 0);
   const eastPositiveOffsets = [...new Set(zone.offsets.map(offsetWest => -offsetWest))];
-  const candidates: Array<{ instantMs: number; offsetMinutes: number }> = [];
+  const candidates                                                      = [];
 
   for (const offsetMinutes of eastPositiveOffsets) {
     const instantMs = naiveMs - offsetMinutes * 60_000;
@@ -64,11 +65,11 @@ export function resolveLocalDateTimeAuthority(local: CivilDateTime, zoneId: stri
   return { status: "RESOLVED", ...unique[0] };
 }
 
-export function compareHostIntlToPinnedAuthority(instantMs: number, zoneId: string): {
-  authorityOffsetMinutes: number;
-  hostIntlOffsetMinutes: number;
-  match: boolean;
-} {
+export function compareHostIntlToPinnedAuthority(instantMs        , zoneId        )   
+                                 
+                                
+                 
+  {
   const authorityOffsetMinutes = authorityOffsetMinutesAtInstant(instantMs, zoneId);
   const hostIntlOffsetMinutes = intlOffsetMinutesAtInstant(instantMs, zoneId);
   return { authorityOffsetMinutes, hostIntlOffsetMinutes, match: authorityOffsetMinutes === hostIntlOffsetMinutes };

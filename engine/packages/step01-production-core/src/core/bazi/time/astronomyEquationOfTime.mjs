@@ -1,16 +1,17 @@
+// Converted from astronomyEquationOfTime.ts on 2026-10-23 with Node stripTypeScriptTypes (type annotations removed, code unchanged).
 import * as AstronomyNS from "astronomy-engine";
 // Works whether the host loads astronomy-engine as ES module or as CommonJS (Netlify, 2026-10-23). Same functions either way.
-const Astronomy: any = "Body" in AstronomyNS ? AstronomyNS : (AstronomyNS as any).default;
+const Astronomy      = "Body" in AstronomyNS ? AstronomyNS : (AstronomyNS       ).default;
 const { Body, Equator, Observer, SiderealTime } = Astronomy;
-import type { EquationOfTimeProvider } from "./trueSolarTime.ts";
+                                                                 
 
-function normalizeHoursSigned(hours: number): number {
+function normalizeHoursSigned(hours        )         {
   let x = ((hours + 12) % 24 + 24) % 24 - 12;
   if (x === -12) x = 12;
   return x;
 }
 
-function utcHours(instantMs: number): number {
+function utcHours(instantMs        )         {
   const d = new Date(instantMs);
   return d.getUTCHours() + d.getUTCMinutes() / 60 + d.getUTCSeconds() / 3600 + d.getUTCMilliseconds() / 3_600_000;
 }
@@ -26,7 +27,7 @@ function utcHours(instantMs: number): number {
  * Observer(0,0,0) introduces only tiny solar topocentric parallax, also far
  * below the 1-minute product tolerance.
  */
-export const astronomyEquationOfTimeMinutes: EquationOfTimeProvider = (instantMs) => {
+export const astronomyEquationOfTimeMinutes                         = (instantMs) => {
   const date = new Date(instantMs);
   const greenwich = new Observer(0, 0, 0);
   const sun = Equator(Body.Sun, date, greenwich, true, true);

@@ -1,8 +1,9 @@
-import type { CivilDateTime } from "../calendar/gregorian.ts";
+// Converted from trueSolarTime.ts on 2026-10-23 with Node stripTypeScriptTypes (type annotations removed, code unchanged).
+                                                              
 
-export type EquationOfTimeProvider = (instantMs: number) => number; // minutes; apparent - mean solar time
+                                                                    // minutes; apparent - mean solar time
 
-function dayOfYearUtc(d: Date): number {
+function dayOfYearUtc(d      )         {
   const start = Date.UTC(d.getUTCFullYear(), 0, 1);
   return Math.floor((Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - start) / 86400000) + 1;
 }
@@ -11,7 +12,7 @@ function dayOfYearUtc(d: Date): number {
  * NOAA-style approximation retained only as an independent cross-check.
  * Release-path code should pass astronomyEquationOfTimeMinutes explicitly.
  */
-export const noaaApproxEquationOfTimeMinutes: EquationOfTimeProvider = (instantMs) => {
+export const noaaApproxEquationOfTimeMinutes                         = (instantMs) => {
   const d = new Date(instantMs);
   const n = dayOfYearUtc(d);
   const hour = d.getUTCHours() + d.getUTCMinutes() / 60 + d.getUTCSeconds() / 3600;
@@ -26,18 +27,18 @@ export const noaaApproxEquationOfTimeMinutes: EquationOfTimeProvider = (instantM
 };
 
 export function apparentSolarOffsetMinutesFromUtc(
-  instantMs: number,
-  longitudeDegEast: number,
-  eotProvider: EquationOfTimeProvider
-): number {
+  instantMs        ,
+  longitudeDegEast        ,
+  eotProvider                        
+)         {
   return longitudeDegEast * 4 + eotProvider(instantMs);
 }
 
 export function localApparentSolarDateTime(
-  instantMs: number,
-  longitudeDegEast: number,
-  eotProvider: EquationOfTimeProvider
-): CivilDateTime {
+  instantMs        ,
+  longitudeDegEast        ,
+  eotProvider                        
+)                {
   const offsetMin = apparentSolarOffsetMinutesFromUtc(instantMs, longitudeDegEast, eotProvider);
   const d = new Date(instantMs + offsetMin * 60_000);
   return {

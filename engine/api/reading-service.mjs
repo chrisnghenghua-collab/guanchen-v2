@@ -2,8 +2,8 @@
 // Pipeline: validate -> computeStep01 (verified calculation core) -> chart analysis -> timing root -> ChartFacts -> 20 v2 generators.
 import fs from 'node:fs';
 import { computeStep01 } from '../packages/step01-production-core/facade.mjs';
-import { assertCivilDateTime } from '../packages/step01-production-core/src/core/bazi/calendar/gregorian.ts';
-import { formatInstantInAuthorityZone, authorityOffsetMinutesAtInstant } from '../packages/step01-production-core/src/core/bazi/time/timezoneAuthority.ts';
+import { assertCivilDateTime } from '../packages/step01-production-core/src/core/bazi/calendar/gregorian.mjs';
+import { formatInstantInAuthorityZone, authorityOffsetMinutesAtInstant } from '../packages/step01-production-core/src/core/bazi/time/timezoneAuthority.mjs';
 import { composeChartAnalysis } from '../server/result-request/chart-analysis.mjs';
 import { composeTimingRoot } from '../server/result-request/timing-root.mjs';
 import { buildChartFacts, POSITION_ZH } from '../interpretation/facts.mjs';

@@ -1,3 +1,4 @@
+// Converted from ruleAuthority.ts on 2026-10-23 with Node stripTypeScriptTypes (type annotations removed, code unchanged).
 export const BA_ZI_RULE_AUTHORITY = {
   brand: "观辰",
   version: "1.0.0-draft-e2c",
@@ -39,4 +40,4 @@ export const BA_ZI_RULE_AUTHORITY = {
   luckTargetJie: "STRICT_PREVIOUS_OR_NEXT_JIE",
   luckIntervalBasis: "ABSOLUTE_UTC_INSTANT",
   luckPeriod: "TEN_CALENDAR_YEARS_HALF_OPEN",
-} as const;
+}         ;

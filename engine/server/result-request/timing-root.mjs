@@ -1,5 +1,5 @@
-import { jieTermsForGregorianYear } from '../../packages/step01-production-core/src/core/bazi/calendar/solarTerms.ts';
-import { addCalendarComponents } from '../../packages/step01-production-core/src/core/bazi/calendar/gregorian.ts';
+import { jieTermsForGregorianYear } from '../../packages/step01-production-core/src/core/bazi/calendar/solarTerms.mjs';
+import { addCalendarComponents } from '../../packages/step01-production-core/src/core/bazi/calendar/gregorian.mjs';
 import { buildSixMonthTimingWindows, buildTwelveMonthTimingWindows } from '../../src/monthTimingAdapterEngine.mjs';
 import { resolveTimingRelations } from '../../src/timingRelationResolutionEngine.mjs';
 

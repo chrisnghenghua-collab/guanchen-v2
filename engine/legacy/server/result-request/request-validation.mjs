@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { validateStep05BirthRequestInput } from '../../src/step05A2BirthInputResultRequestFlow.mjs';
-import { assertCivilDateTime } from '../../../packages/step01-production-core/src/core/bazi/calendar/gregorian.ts';
+import { assertCivilDateTime } from '../../../packages/step01-production-core/src/core/bazi/calendar/gregorian.mjs';
 
 const rows = JSON.parse(readFileSync(new URL('../../../packages/step01-production-core/data/locations.v2.json', import.meta.url), 'utf8')).records;
 const exactKeys = (value, expected) => value && Object.getPrototypeOf(value) === Object.prototype && JSON.stringify(Object.keys(value).sort()) === JSON.stringify([...expected].sort());

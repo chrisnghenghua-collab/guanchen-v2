@@ -1,25 +1,26 @@
-import { mod } from "../pillars/jiazi.ts";
+// Converted from gregorian.ts on 2026-10-23 with Node stripTypeScriptTypes (type annotations removed, code unchanged).
+import { mod } from "../pillars/jiazi.mjs";
 
-export type CivilDate = { year: number; month: number; day: number };
-export type CivilDateTime = CivilDate & { hour: number; minute: number; second?: number };
+                                                                     
+                                                                                          
 
-export function isLeapYear(year: number): boolean {
+export function isLeapYear(year        )          {
   return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
 }
 
-export function daysInMonth(year: number, month: number): number {
+export function daysInMonth(year        , month        )         {
   if (month === 2) return isLeapYear(year) ? 29 : 28;
   return [4,6,9,11].includes(month) ? 30 : 31;
 }
 
-export function assertCivilDateTime(v: CivilDateTime): void {
+export function assertCivilDateTime(v               )       {
   if (!Number.isInteger(v.year) || !Number.isInteger(v.month) || !Number.isInteger(v.day)) throw new Error("Invalid date");
   if (v.month < 1 || v.month > 12) throw new Error("Invalid month");
   if (v.day < 1 || v.day > daysInMonth(v.year, v.month)) throw new Error("Invalid day");
   if (v.hour < 0 || v.hour > 23 || v.minute < 0 || v.minute > 59 || (v.second ?? 0) < 0 || (v.second ?? 0) > 59) throw new Error("Invalid time");
 }
 
-export function gregorianJdn(date: CivilDate): number {
+export function gregorianJdn(date           )         {
   const a = Math.floor((14 - date.month) / 12);
   const y = date.year + 4800 - a;
   const m = date.month + 12 * a - 3;
@@ -28,20 +29,20 @@ export function gregorianJdn(date: CivilDate): number {
 
 // Modern Gregorian dates: sexagenary day index, 0 = 甲子.
 // Calibrated to the conventional JDN relation (JDN + 49) mod 60.
-export function dayJiaziIndexForGregorianDate(date: CivilDate): number {
+export function dayJiaziIndexForGregorianDate(date           )         {
   return mod(gregorianJdn(date) + 49, 60);
 }
 
-export function addDays(date: CivilDate, days: number): CivilDate {
+export function addDays(date           , days        )            {
   const ms = Date.UTC(date.year, date.month - 1, date.day + days);
   const d = new Date(ms);
   return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate() };
 }
 
 export function addCalendarComponents(
-  base: CivilDateTime,
-  add: { years?: number; months?: number; days?: number; hours?: number; minutes?: number }
-): CivilDateTime {
+  base               ,
+  add                                                                                      
+)                {
   assertCivilDateTime(base);
   let year = base.year + (add.years ?? 0);
   let month = base.month;
