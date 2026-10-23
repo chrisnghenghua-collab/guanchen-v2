@@ -21,6 +21,7 @@ await check('L-03', 'reading for a fictional chart identical to local', () => sa
 await check('L-04', 'birth-time estimate identical to local', () => same('/api/v2/time-estimate', { version: 2, birth: { date: birth.date, gender: 'MALE', location: '吉隆坡' }, period: 'UNKNOWN', answers: { Q_DECIDE: '比劫' }, asOf: ASOF }));
 await check('L-05', 'invalid input rejected the same way', () => same('/api/v2/reading', { version: 2, birth: { ...birth, location: '东京' }, asOf: ASOF }));
 await check('L-06', 'old interface is NOT deployed', async () => { const r = await live('/api/result', {}); return [[404, 405].includes(r.status) ? null : 'OLD_API_REACHABLE ' + r.status]; });
+await check('L-07', 'temporary diagnostic probe is gone', async () => { const r = await fetch(BASE + '/api/v2/diag-probe', { headers: { 'x-guanchen-diag': '1' } }); return [r.status === 404 ? null : 'PROBE_STILL_DEPLOYED ' + r.status]; });
 const fail = rows.filter(r => r.p.length).length;
 console.log(fail ? `P5_LIVE FAIL: ${fail}/${rows.length} - send this output to Claude` : `P5_LIVE PASS: ${rows.length}/${rows.length} (${BASE})`);
 process.exit(fail ? 1 : 0);

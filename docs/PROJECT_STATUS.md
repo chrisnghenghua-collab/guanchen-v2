@@ -35,7 +35,7 @@
 | P2 计算核对 | **PASS**（2026-10-22） | 独立交叉核对 1454 盘：1404 盘一致，0 处真正不一致；Chris 的 10 组 Swiss Ephemeris 资料 10/10 一致；P2-01、D-01（子初换日）、D-02（142 个地点含台港澳）均已完成（见 `docs\P2_CALC_REPORT.md`） |
 | P3 文案重建 | **进行中**：P3-1 命盘事实层、P3-2 写法（Chris 已认可）、P3-3 全部 20 题完成；文案表 672 条；500 盘检查每题最多一个结论占比 7%～35%，无重复、无外露代码（`docs\P3_SAMPLES_GENERATED.txt`）。P3-4（2026-10-22）：按 Chris 决定，**不沿用旧接口，另建全新 API v2** `/api/v2/reading`（`docs\API_V2.md`），31/31 测试通过。**P3 收口**：RUN_TESTS 5 项在 Chris 的 Windows Node 24 上全部 PASS（2026-10-22 23:37） | 判断与文案分离；文案表由 Chris 可直接编辑；先做 2～3 题样稿；「换工作」「新机会」改写为中立立场并设计所需输入 |
 | P4 时辰不详 | **V1 完成（2026-10-23 Chris Windows RUN_TESTS 6/6 PASS）**（`docs\P4_TIME_UNKNOWN_EVAL.md` 第六节、`docs\API_V2.md`） | 问卷反推：选时段 → 逐题回答 → 前 2 名候选 + 百分比 → 点选自动填入。模拟：知道时段前 2 名 99%；完全不知道 67–90%（乱猜 15%）。真实准确度未验证 |
-| P5 Netlify 预览 | **进行中（根本原因已找到并在本机验证，见变更记录 2026-10-23 恢复）**；原为进行中（2026-10-23 Chris 批准）：本地准备完成（真人样本资料已换成虚构、旧接口移入 `engine\legacy\`、`netlify.toml`、`.gitignore`、建设中首页、`tests\p5_live_check.mjs`）；GitHub 私有仓库 `chrisnghenghua-collab/guanchen-v2` 已上传（2026-10-23，main @ `f04fc79`，114 个文件）；待 Netlify 连接部署 | Netlify 新网站默认 Node 24（2026-07 起）；部署设置已加 `NODE_VERSION=24` |
+| P5 Netlify 预览 | **PASS（2026-10-23）**：`https://guanchen-preview.netlify.app`；线上检查 `tests\p5_live_check.mjs` 6/6——问卷、排盘、推测时辰、错误输入与本机逐字节相同，旧接口未部署；GitHub 私有仓库 `chrisnghenghua-collab/guanchen-v2`。临时诊断（探针函数、诊断开关）已移除 | 部署要点：函数包不可含 .ts（Netlify 打包会覆盖入口）；须带 `package.json`；astronomy-engine 以 CommonJS 版加载（Netlify 运行环境不猜模块格式）；以后改动先跑 RUN_TESTS（第 1 步已模拟 Netlify 的严格加载） |
 | P6 UI | 待办（最后做） | 呈现建议：总览只显示结论 → 点开看结论与建议 → 「命盘依据」默认收起；日主与格局依据放命盘总览页 |
 
 ## 5. 已证实的事实
@@ -66,6 +66,7 @@
 
 ## 8. 变更记录
 - 2026-10-22 API v2：新增 `engine\api\`（reading-service.mjs、http-handler.mjs）、`engine\netlify\functions\reading.mjs`、`tests\v2_api.mjs`、`tests\golden\v2_chart_expected.json`、`tools\copy_add.py`（只新增、不覆盖文案）；文案表新增 29 条（全局免责、错误提示、命盘总览）。旧接口未改动。
+- 2026-10-23 **P5 PASS**：fix 6 部署后 `P5_LIVE PASS: 6/6`。收尾：删除临时探针函数 `diag-probe.mjs` 与两个函数入口的诊断开关；删除本机临时文件夹 `_tmp_claude`、`engine\.netlify`（均未上传）。
 - 2026-10-23 P5 fix 5 上线后：函数已能启动（500 而非 502），诊断显示 `Unexpected token 'export'`。原因：astronomy-engine 的 ESM 版 `esm/astronomy.js` 没有 `"type": "module"` 标记，只在 Node 会「猜格式」时可用；Netlify 运行环境不猜。本机以 `--no-experimental-detect-module` 重现。修正：`solarTerms.mjs`、`astronomyEquationOfTime.mjs` 改用 `createRequire` 明确加载同一库同版本（2.1.19）的 CommonJS 版。验证：关闭格式猜测下 v2 42/42、10/10；交叉核对 1574/0、旧接口逐字节、P3、P4 PASS；函数包经 Netlify 启动程序、关闭格式猜测执行 4/4 与本机逐字节相同。`RUN_TESTS` 第 1 步改为关闭格式猜测执行，防止再犯。
 - 2026-10-23 P5 **恢复**：在 Chris 本机用 `netlify build --offline`（@netlify/build 37.6.0，与服务器同版）重现打包。**根本原因**：函数包里只要有 .ts 文件，Netlify 打包工具就会自行转换并写错位置，把函数入口 `time-estimate.mjs`、`reading.mjs` 覆盖成 `trueSolarTime.ts` 的转换结果，其余 .ts 从包中消失——昨晚 4 种错误全由此而来。**修正**：引擎 15 个 .ts 用 Node 自带 `stripTypeScriptTypes`（与 Node 运行 .ts 时相同的去类型步骤）转为 .mjs，原 .ts 删除，5 个文件的引用由 `.ts` 改为 `.mjs`；`netlify.toml` 注释更正（先前把问题归咎于 nft 是误判）。**验证**：本机全部测试 PASS 且 golden 逐字节相同（v2 42/42、10/10、交叉核对 1574/0、旧接口逐字节、P3 分布、P4 模型、P3 事实层）；重新打包后函数包内 0 个 .ts、入口完好；以 Netlify 自己的启动程序在本机执行两个函数包，4 个请求与本机引擎**逐字节相同**（PACKAGE_CHECK PASS）。
 - 2026-10-23 P5 **暂停**（Chris 提出，Claude 同意）：连续 4 次部署修正未达成 PASS（错误依次变化：CommonJS 具名导出 → handler is not a function → 缺 package.json → Unexpected token 'export'）。依规则停止「改一点、部署一次」，改为先在本机重建 Netlify 的打包结果作为唯一排查基线，本机通过后才再部署。当前线上：首页正常、旧接口未部署、两个新接口 502（无人使用）；GitHub main @ fix 4；本机测试全部 PASS，计算未受影响。
