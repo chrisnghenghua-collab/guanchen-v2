@@ -17,13 +17,14 @@
 | `tests\` | `http_regression.mjs`：32 个真实 HTTP 用例；`golden\gc11_expected.json`：GC-WEB-11 Windows 运行的逐字节预期 |
 | `docs\` | 本文件与复制清单 |
 | `engine\legacy\` | 旧接口（`netlify\functions\result.mjs`）及只被它使用的 32 个文件；**不部署**，只给 RUN_TESTS 第 5 步「旧接口计算守卫」使用（2026-10-23 P5 移入） |
-| `engine\public\` | 网站静态页（目前只有「建设中」首页，P6 换成正式界面） |
-| `netlify.toml`、`.gitignore` | 部署设置（只部署 `/api/v2/reading`、`/api/v2/time-estimate`）；上传 GitHub 时排除 node_modules、测试日志 |
+| `engine\public\` | 正式网站：`index.html`、`assets\app.js`（全部画面）、`assets\scene.js`（星空山水）、`assets\zh-tw.js`＋`zh-tw-data.json`（繁体转换）、`stats.html`、`404.html`、标志与分享图（P6–P8） |
+| `netlify.toml`、`.gitignore` | 部署设置（部署 `/api/v2/reading`、`/api/v2/time-estimate`、`/api/v2/stats`；安全标头含 Content-Security-Policy）；上传 GitHub 时排除 node_modules、测试日志 |
+| `tools\` | 本机预览 `dev_server.mjs`；地点表 `gen_public_locations.py`；文案追加 `copy_add.py`；繁体表 `gen_zh_tw.py`＋`zh_tw_overrides.tsv`（命理用语覆盖）＋`opencc\`（OpenCC 词库，Apache-2.0） |
 
 **未搬入（留在归档里）：** 旧 UI（app.js / index.html / styles.css / 背景图）、根目录 1197 个过程文件、`web/a5` 证据、200 个旧脚本、旧测试、构建输出、S6/S7 哈希打包流程。
 
 ## 3. 如何验证（任何改动前后都跑一次）
-双击 `RUN_TESTS.cmd`，会依次跑 6 项：①新接口 v2（42 项，含推测时辰）②解读质量（500 盘 × 20 题）③Chris 的 10 组真太阳时资料 ④约 1600 盘的独立计算交叉核对 ⑤旧接口计算守卫（`engine\legacy\`，确认计算核心没被动到）⑥推测时辰模型检查。部署后另跑 `node tests\p5_live_check.mjs <网址>`，确认线上结果与本机逐字节相同。
+双击 `RUN_TESTS.cmd`，会依次跑 10 项：①新接口 v2（42 项，含推测时辰与 P7 各栏位）②解读质量（500 盘 × 20 题）③Chris 的 10 组真太阳时资料 ④约 1600 盘的独立计算交叉核对 ⑤旧接口计算守卫（`engine\legacy\`，确认计算核心没被动到）⑥推测时辰模型检查 ⑦网站档案（地点表同步、页面档案、只连自家 API、不在浏览器储存资料）⑧专业命盘表对照 tyme4ts ⑨匿名统计 ⑩繁体转换。部署后另跑 `node tests\p5_live_check.mjs <网址>`（11 项），确认线上结果与本机逐字节相同。
 预期结果：最后一行显示 `RESULT: PASS`。如果某个改动**有意**改变输出（例如文案改写），需要先经 Chris 批准，再更新 golden，并在下方变更记录中写明原因。
 
 ## 4. 阶段
@@ -36,7 +37,9 @@
 | P3 文案重建 | **进行中**：P3-1 命盘事实层、P3-2 写法（Chris 已认可）、P3-3 全部 20 题完成；文案表 672 条；500 盘检查每题最多一个结论占比 7%～35%，无重复、无外露代码（`docs\P3_SAMPLES_GENERATED.txt`）。P3-4（2026-10-22）：按 Chris 决定，**不沿用旧接口，另建全新 API v2** `/api/v2/reading`（`docs\API_V2.md`），31/31 测试通过。**P3 收口**：RUN_TESTS 5 项在 Chris 的 Windows Node 24 上全部 PASS（2026-10-22 23:37） | 判断与文案分离；文案表由 Chris 可直接编辑；先做 2～3 题样稿；「换工作」「新机会」改写为中立立场并设计所需输入 |
 | P4 时辰不详 | **V1 完成（2026-10-23 Chris Windows RUN_TESTS 6/6 PASS）**（`docs\P4_TIME_UNKNOWN_EVAL.md` 第六节、`docs\API_V2.md`） | 问卷反推：选时段 → 逐题回答 → 前 2 名候选 + 百分比 → 点选自动填入。模拟：知道时段前 2 名 99%；完全不知道 67–90%（乱猜 15%）。真实准确度未验证 |
 | P5 Netlify 预览 | **PASS（2026-10-23）**：`https://guanchen-preview.netlify.app`；线上检查 `tests\p5_live_check.mjs` 6/6——问卷、排盘、推测时辰、错误输入与本机逐字节相同，旧接口未部署；GitHub 私有仓库 `chrisnghenghua-collab/guanchen-v2`。临时诊断（探针函数、诊断开关）已移除 | 部署要点：函数包不可含 .ts（Netlify 打包会覆盖入口）；须带 `package.json`；astronomy-engine 以 CommonJS 版加载（Netlify 运行环境不猜模块格式）；以后改动先跑 RUN_TESTS（第 1 步已模拟 Netlify 的严格加载） |
-| P6 UI | 待办（最后做） | 呈现建议：总览只显示结论 → 点开看结论与建议 → 「命盘依据」默认收起；日主与格局依据放命盘总览页 |
+| P6 UI | **P6-1 完成于本机（2026-10-23，简体全流程，待 Chris 本机预览与 RUN_TESTS）**；方向：A 夜观（B 级：背景 3D 粒子空间 + 平面玻璃文字面板） | Chris 决定：手机优先、电脑并用；只做简体与繁体；四柱字按五行着色（木绿、火朱、土黄、金白、水蓝）并附图例；输入页尽量点选（日期/时间选择器、出生地按国家与地区点选）；隐约水墨山水、金色光感、星点光源（不可过于明显）。粒子：银河式旋转、自由飘动、随机闪烁、流星；手机实测 60fps / 4000 粒子。设计稿：claude.ai「观辰 P6 界面方向」画布；粒子试作：「观辰粒子试作」 |
+| P7 专业命盘 | **P7-1 计算层完成（2026-10-23，本机）**；**P7-2 喜用神完成（2026-10-24，本机，Chris 已认可样稿）**；**P7-3 大运流年详解完成（2026-10-24，本机，Chris 已认可）**；**P7-4 结果页模块完成（2026-10-24，Chris 在电脑与手机审查认可）**；全部完成并经 Chris 在网页审查后才上传 | Chris 决定：命盘表补齐（精筛、不堆解释）；神煞 36 个（主流软件惯例，`docs\P7_SHENSHA.md`）；喜用神扶抑为主、调候为辅；结果页模块化（命盘表／五行与喜用神／十神／神煞／大运／流年／四大主题），默认只显示结论；命盘表下加干支关系；不加命宫身宫胎元；大运、流年点选后看大纲与注意事项 |
+| P8 上线前完善 | **完成于本机（2026-10-24），待 Chris RUN_TESTS 10/10 与批准上线** | Chris 决定：先免费上线，深度内容日后收费（月费或逐项开通再定）；访问人数在网页底部公开显示；繁体用台湾正体；星级（不用百分比）的每日运势放下一版。P8-1 匿名统计、P8-2 说明与隐私页、P8-3 分享图卡、P8-4 繁体、P8-5 全盘检查（安全标头、404、旧浏览器相容、线上检查扩充） |
 
 ## 5. 已证实的事实
 - 计算核心可用，结果确定、可重复；Windows Node 24 与 Linux Node 22 输出一致。
@@ -66,6 +69,22 @@
 
 ## 8. 变更记录
 - 2026-10-22 API v2：新增 `engine\api\`（reading-service.mjs、http-handler.mjs）、`engine\netlify\functions\reading.mjs`、`tests\v2_api.mjs`、`tests\golden\v2_chart_expected.json`、`tools\copy_add.py`（只新增、不覆盖文案）；文案表新增 29 条（全局免责、错误提示、命盘总览）。旧接口未改动。
+- 2026-10-23 P7-1 计算层：新增 `engine\interpretation\pro-chart.mjs`，API 回应新增 `chart.pro`（四柱：天干十神、藏干及十神、纳音、星运、自坐、旬空、空亡标记、36 神煞；日柱空亡；干支关系；12 步大运与流年的十神）。`tests\p7_pro_check.mjs`（RUN_TESTS 第 8 步）：纳音/旬空 60、十二长生 120、藏干 12、十神 100 全部与 tyme4ts 一致，另含神煞教科书案例。v2 预期值：原有项目 0 处改变，新增 `.pro` 项目。纳音「沙中金」采主流写法。原有计算与解读未改动。
+- 2026-10-24 P7-2 喜用神：新增 `engine\interpretation\yongshen.mjs`，API 回应新增 `chart.fiveElements`（旺相休囚死；用神、喜神、忌神及其十神类别；调候：冬需火、夏需水，与扶抑一致／冲突／作辅助；原局不见用神的提示；中和平手或极端偏旺偏弱的盘标为「仅供参考」）。文字 19 行 `ys.*` 加入 zh-CN.csv。随机 400 盘：标为仅供参考 100 盘（25%），可能从格 9 盘。v2 预期值：原有项目（含 `.pro`）0 处改变，新增 `.ys` 项目。RUN_TESTS 8 步在本机虚拟环境全部通过。原有计算与解读未改动。
+- 2026-10-24 P7-3 大运流年详解：新增 `engine\interpretation\periods.mjs`，API 回应新增 `chart.periods`（每步大运：起止年份与周岁、六种基调〔顺势/渐顺/起伏/平稳/蓄力/守成，按喜用神判断〕、前五年看天干后五年看地支的大纲、与原局冲刑害合的注意事项；每步下 10 个流年：基调、今年重点、岁运冲／天克地冲、太岁〔值冲刑害破〕、丧门吊客、10 个流年神煞、留意月份与顺手月份〔按节气，含公历起止日〕；18 岁以前用成长用语；感情句只在 18–60 岁出现）。`pro-chart.mjs` 新增 `shenshaOnBranch`（原有输出不变）。文字 91 行 `pd.*`。随机 400 盘全部正常，单次约 0.1 秒、约 77 KB。v2 预期值：原有项目 0 处改变，新增 `.pd`。RUN_TESTS 8 步在本机虚拟环境通过。
+- 2026-10-24 P7-4 结果页模块：`engine\public\assets\app.js`／`app.css` 结果页改为模块（顶部固定导航：命盘·五行·十神·神煞·大运·流年·主题）。命盘表含主星、天干、地支、藏干十神、纳音、星运、自坐、空亡（落空标示），下方干支关系；五行分布＋旺相休囚死＋用喜忌＋取用说明（点开）；十神五类强弱＋命盘依据（点开）；神煞按柱分组、四类颜色，点选看一句话说明；大运列表与当前大运卡，点入大运页（大纲、注意事项、十年流年）；流年卡与十年流年格，点入流年页（大纲、注意事项、流年神煞、留意／顺手月份），可前后翻页，返回时回到原位置。API 新增 `chart.glossary`（本盘出现的神煞的一句话说明，文字 36 行 `ssg.*`，`pro-chart.mjs` 新增 `SHENSHA_GROUP`）；v2 预期值原有项目 0 处改变，新增 `.gl`。另：本机 app.js 补回问卷开头说明（之前漏同步的一行）。
+- 2026-10-24 品牌标志与分享预览：Chris 选定 Logo A「辰印」（「辰」字印章＋右上星，字形取自 Noto Serif SC Bold〔OFL 授权〕并转为路径）。`engine\public` 新增 favicon.svg、favicon-32.png、apple-touch-icon.png、icon-192/512.png、og-image.jpg（1200×630）、site.webmanifest；index.html 新增描述、图示与分享预览标签（网址暂定 https://guanchen-preview.netlify.app，上线前须与实际网址一致）；页首「观辰」旁加小标志。Chris 审查结果页：电脑与手机均认可。Netlify 免费额度剩 95 点（11 月 6 日重置；正式上线每次 15 点，预览 0 点；额度用完会暂停帐号下全部网站）→ 决定 logo 与 P6/P7 合并为一次正式上线。
+- 2026-10-24 P8-1 匿名使用统计：`engine\api\stats-service.mjs`＋`engine\netlify\functions\stats.mjs`（Netlify Blobs，新依赖 `@netlify/blobs` 10.7.11），网页底部公开显示排盘与访问次数，`/stats.html` 看每日表。只记次数；网页仍不在浏览器储存任何东西（原本用浏览器记「今天已计」，被第 7 步检查拦下后改为每次打开计一次）。`tests\p8_stats_check.mjs`（第 9 步）：计数、50 个同时写入不漏、拒绝异常输入、马来西亚日期、只回传次数。本机预览用内存计数，不碰正式数字。
+- 2026-10-24 P8-2 说明与隐私页：时间换算（真太阳时、历史时区）、子初换日与流派差异、大运起运（三天折一年）、解读方法、隐私、繁体来源、使用提醒；内容逐项对照引擎程序。输入页与结果页底部有入口。
+- 2026-10-24 P8-3 分享图卡：在浏览器内画出 1080×1350 图卡（四柱、日主格局、用喜、当前大运与今年流年、网址），不上传、不显示出生日期时间地点；手机可直接分享，电脑下载。
+- 2026-10-24 P8-4 繁体（台湾正体）：网页在浏览器内转换（API 与计算不变），顶部「繁體／简体」切换，台港澳浏览器自动繁体，选择记在网址 `?lang=tw`。转换链同 OpenCC s2twp；`tools\zh_tw_overrides.tsv` 覆盖命理用语（丑、干不转；冲在命理语境为「沖」，一般动词为「衝」；斗湖、划算、是只、组织里、了解等）。`tests\p8_tw_check.mjs`（第 10 步）：干支不变、39 个校订词、60 盘＋问卷＋页面全部转换且再转不变、词表与文案同步。
+- 2026-10-24 P8-5 全盘检查：安全标头（Content-Security-Policy、Permissions-Policy）在浏览器全流程测试无违规；`stats.html` 的脚本移到独立档；新增 `404.html`；繁体转换改用旧版 Safari 也支持的写法；`global.time_unknown` 文案更新（问卷已上线）；线上检查 `tests\p5_live_check.mjs` 扩充为 11 项（页面档案、安全标头、统计、404；不会增加正式次数）。未做：three.js 的完整性哈希（cdnjs 在两边环境都连不上，日后补）。
+- 2026-10-24 Chris 确认正式网址 `https://guanchen-preview.netlify.app`，并决定开放搜索引擎收录：首页移除 noindex，加 canonical 与简繁 hreflang，新增 `robots.txt`（不收录 /stats.html 与 /api/）、`sitemap.xml`；统计页与 404 页仍不收录。Chris 的 Windows RUN_TESTS 10/10 PASS（2026-10-24 13:53）。
+- 2026-10-23 P4 问卷 V2（Chris 提供并自测）：12 题、选项直接对应时支、心性题权重 0.4 / 事件题 0.6；题目、对应与计分照 Chris 版本，只润色措辞（文案表新增 61 行）。Chris 样本 → 申时第一、巳时第二，与其测试一致。模拟：不知道时辰前 2 名 93–99%。详见 `docs\P4_TIME_UNKNOWN_EVAL.md` 第七节（含待决定的「子、戌时最高分较低」问题）。网页问卷开头显示作答提示。
+- 2026-10-23 P6-1 修正（Chris）：结果页不再保留本命星光核（会挡住资料）。改为第三种状态「融入自然」：结果出现时，粒子幻化融入山体山脊、远方星空、山前水流与空中飘动的光点（中速）；本命星只在排盘加载画面短暂出现。山线流光速度调为中速。粒子试作页改为直接载入网站的 `scene.js`。Chris 确认「这下可以了」：背景视觉定稿。
+- 2026-10-23 P6-1 正式网页（简体）：`engine\public\index.html`、`assets\app.js`（流程：输入 → 问卷/候选 → 本命星 → 命盘总览 → 单题）、`assets\scene.js`（由已核可的粒子试作 v5 移植：星盘、本命星汇聚（弹簧惯性）、星云爆发、四层线描山水、山线流光；不支持 WebGL 时改用静态背景，「减少动态效果」时不播放动画）、`assets\app.css`；`data\locations.json` 由 `tools\gen_public_locations.py` 从 locations.v2.json 生成（142 地点）；本机预览 `tools\dev_server.mjs`；新测试 `tests\p6_public_check.mjs`（RUN_TESTS 第 7 步）。试作最终版存档 `docs\design\particle_prototype_v5.html`。浏览器端到端（手机尺寸）：校验提示、出生地选择、排盘、单题、补充现况更新建议、分页、返回、不知道时辰问卷 → 候选 → 推测时辰提醒、时段选择，全部正常。网页不在浏览器储存任何出生资料。计算与 API 未改动。
+- 2026-10-23 P6 粒子定稿：弹簧回弹的本命星（光核 + 五行光环）、星云爆发散开、山水从虚空浮现、山线流光；四层山水。Chris 确认「可以了」。
+- 2026-10-23 P6：Chris 选定 A 夜观；首版粒子试作手机 60fps / 4000 粒子稳定；要求加入宇宙空间感、自由飘动、闪烁星点（第二版试作已加入）。
 - 2026-10-23 **P5 PASS**：fix 6 部署后 `P5_LIVE PASS: 6/6`。收尾：删除临时探针函数 `diag-probe.mjs` 与两个函数入口的诊断开关；删除本机临时文件夹 `_tmp_claude`、`engine\.netlify`（均未上传）。
 - 2026-10-23 P5 fix 5 上线后：函数已能启动（500 而非 502），诊断显示 `Unexpected token 'export'`。原因：astronomy-engine 的 ESM 版 `esm/astronomy.js` 没有 `"type": "module"` 标记，只在 Node 会「猜格式」时可用；Netlify 运行环境不猜。本机以 `--no-experimental-detect-module` 重现。修正：`solarTerms.mjs`、`astronomyEquationOfTime.mjs` 改用 `createRequire` 明确加载同一库同版本（2.1.19）的 CommonJS 版。验证：关闭格式猜测下 v2 42/42、10/10；交叉核对 1574/0、旧接口逐字节、P3、P4 PASS；函数包经 Netlify 启动程序、关闭格式猜测执行 4/4 与本机逐字节相同。`RUN_TESTS` 第 1 步改为关闭格式猜测执行，防止再犯。
 - 2026-10-23 P5 **恢复**：在 Chris 本机用 `netlify build --offline`（@netlify/build 37.6.0，与服务器同版）重现打包。**根本原因**：函数包里只要有 .ts 文件，Netlify 打包工具就会自行转换并写错位置，把函数入口 `time-estimate.mjs`、`reading.mjs` 覆盖成 `trueSolarTime.ts` 的转换结果，其余 .ts 从包中消失——昨晚 4 种错误全由此而来。**修正**：引擎 15 个 .ts 用 Node 自带 `stripTypeScriptTypes`（与 Node 运行 .ts 时相同的去类型步骤）转为 .mjs，原 .ts 删除，5 个文件的引用由 `.ts` 改为 `.mjs`；`netlify.toml` 注释更正（先前把问题归咎于 nft 是误判）。**验证**：本机全部测试 PASS 且 golden 逐字节相同（v2 42/42、10/10、交叉核对 1574/0、旧接口逐字节、P3 分布、P4 模型、P3 事实层）；重新打包后函数包内 0 个 .ts、入口完好；以 Netlify 自己的启动程序在本机执行两个函数包，4 个请求与本机引擎**逐字节相同**（PACKAGE_CHECK PASS）。

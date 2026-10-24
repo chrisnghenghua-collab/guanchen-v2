@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>观辰 · 使用统计</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+:root { --bg: #070B15; --fg: #ECE6D8; --muted: #B9B3A6; --gold: #D8BC82; --line: rgba(255,255,255,.1); color-scheme: dark; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.6 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif; }
+main { max-width: 720px; margin: 0 auto; padding: 24px 16px 40px; }
+h1 { font-family: 'Noto Serif SC', 'Songti SC', serif; font-weight: 500; font-size: 24px; margin: 0 0 4px; }
+.small { font-size: 12px; color: var(--muted); }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 18px 0; }
+.tile { border: 1px solid var(--line); border-radius: 14px; padding: 12px; background: rgba(255,255,255,.03); }
+.tile b { display: block; font-size: 24px; color: var(--gold); font-variant-numeric: tabular-nums; font-weight: 500; }
+.wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+th, td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--muted); font-weight: 400; }
+@media (max-width: 520px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+</head>
+<body>
+<main>
+  <h1>观辰 · 使用统计</h1>
+  <div class="small">只记次数，不记任何个人资料。日期按马来西亚时间；数字最多延迟约 1 分钟。</div>
+  <div class="tiles" id="tiles"></div>
+  <div class="wrap"><table id="days"></table></div>
+  <p class="small">访问＝每个浏览器每天第一次打开；排盘＝成功显示命盘；问卷＝开始推测时辰；大运流年＝每个命盘第一次点进大运或流年详细页。</p>
+</main>
+<script src="assets/stats.js"></script>
+</body>
+</html>

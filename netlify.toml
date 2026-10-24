@@ -1,5 +1,6 @@
 # GUANCHEN V2 - Netlify configuration (P5, 2026-10-23).
-# Only the two v2 endpoints are deployed. The old interface lives in engine/legacy/ and is used by tests only.
+# Deployed endpoints: /api/v2/reading, /api/v2/time-estimate, /api/v2/stats (P8-1 anonymous counters, Netlify Blobs).
+# The old interface lives in engine/legacy/ and is used by tests only.
 [build]
   base = "engine"
   publish = "public"
@@ -25,3 +26,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "no-referrer"
     X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    # P8-5 (2026-10-24): the page may load code only from itself and cdnjs (three.js), fonts from Google, and talk only to its own API.
+    # Tested in a browser with every screen, 繁體, the share card and stats.html: no violations.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"

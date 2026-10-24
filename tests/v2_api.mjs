@@ -40,8 +40,21 @@ function readingChecks(p, text) {
 }
 // user-visible strings only (skip ids / codes / pillars metadata keys)
 const textOnly = p => JSON.stringify(p, (k, v) => (['id', 'domain', 'gender', 'timezone', 'apiVersion', 'asOf'].includes(k) ? undefined : v));
-const chartHash = p => sha(JSON.stringify({ ...p.chart, dayMaster: { ...p.chart.dayMaster, image: undefined }, overview: undefined }));
-function goldenCheck(id, p) { const h = chartHash(p); newGolden[id] = h; return golden[id] && golden[id] !== h ? 'CHART_GOLDEN_MISMATCH' : (!golden[id] && !UPDATE ? 'CHART_GOLDEN_MISSING' : null); }
+// chart.pro, chart.fiveElements, chart.periods and chart.glossary (P7, 2026-10-23/24) are hashed separately, so the expected values recorded before P7 still prove the original chart fields unchanged.
+const chartHash = p => sha(JSON.stringify({ ...p.chart, dayMaster: { ...p.chart.dayMaster, image: undefined }, overview: undefined, pro: undefined, fiveElements: undefined, periods: undefined, glossary: undefined }));
+function goldenCheck(id, p) {
+  const h = chartHash(p); newGolden[id] = h;
+  const ph = sha(JSON.stringify(p.chart?.pro ?? null)); newGolden[id + '.pro'] = ph;
+  const yh = sha(JSON.stringify(p.chart?.fiveElements ?? null)); newGolden[id + '.ys'] = yh;
+  const dh = sha(JSON.stringify(p.chart?.periods ?? null)); newGolden[id + '.pd'] = dh;
+  const gh = sha(JSON.stringify(p.chart?.glossary ?? null)); newGolden[id + '.gl'] = gh;
+  if (golden[id] && golden[id] !== h) return 'CHART_GOLDEN_MISMATCH';
+  if (golden[id + '.pro'] && golden[id + '.pro'] !== ph) return 'PRO_GOLDEN_MISMATCH';
+  if (golden[id + '.ys'] && golden[id + '.ys'] !== yh) return 'YS_GOLDEN_MISMATCH';
+  if (golden[id + '.pd'] && golden[id + '.pd'] !== dh) return 'PD_GOLDEN_MISMATCH';
+  if (golden[id + '.gl'] && golden[id + '.gl'] !== gh) return 'GL_GOLDEN_MISMATCH';
+  return (!golden[id] || !golden[id + '.pro'] || !golden[id + '.ys'] || !golden[id + '.pd'] || !golden[id + '.gl']) && !UPDATE ? 'CHART_GOLDEN_MISSING' : null;
+}
 async function legacyParity(b) {
   const lp = legacy.requestProductionResult({ requestType: 'GUANCHEN_PRODUCT_RESULT_REQUEST', requestVersion: '1.0.0', birth: { calendar: 'GREGORIAN', date: b.birth.date, timeKnowledge: 'KNOWN', time: b.birth.time, gender: b.birth.gender, location: b.loc }, asOfLocal: ASOF });
   return lp.chart.pillars;
@@ -92,15 +105,21 @@ await test('V2-08', 'server clock used when asOf omitted', async () => { const b
 const EST = URL_.replace('/api/v2/reading', '/api/v2/time-estimate');
 const ebirth = { date: '1990-03-14', gender: 'MALE', location: '吉隆坡' };
 const est = (body, opts = {}) => send({ version: 2, birth: ebirth, asOf: ASOF, ...body }, { url: EST, ...opts });
-await test('E-01', 'GET questionnaire + periods', async () => { const r = await fetch(EST); const p = await r.json(); return [r.status === 200 ? null : 'STATUS', p.questions?.length === 8 ? null : 'Q_COUNT', p.periods?.length === 10 ? null : 'PERIOD_COUNT', /出生证明/.test(p.findExactHint) ? null : 'HINT', LEAK.test(JSON.stringify(p, (k, v) => (k === 'id' || k === 'value' ? undefined : v))) ? 'LEAK' : null]; });
+await test('E-01', 'GET questionnaire + periods', async () => { const r = await fetch(EST); const p = await r.json(); return [r.status === 200 ? null : 'STATUS', p.questions?.length === 12 ? null : 'Q_COUNT', /本来的样子/.test(p.intro ?? '') ? null : 'INTRO', p.periods?.length === 10 ? null : 'PERIOD_COUNT', /出生证明/.test(p.findExactHint) ? null : 'HINT', LEAK.test(JSON.stringify(p, (k, v) => (k === 'id' || k === 'value' ? undefined : v))) ? 'LEAK' : null]; });
 await test('E-02', 'UNKNOWN, no answers: 13 candidates, ranked by duration, questions offered', async () => { const r = await est({ period: 'UNKNOWN' }); const p = await r.json(); const sum = p.candidates.reduce((x, c) => x + c.percent, 0);
   return [r.status === 200 ? null : 'STATUS', p.candidateCount === 13 ? null : 'CANDS ' + p.candidateCount, Math.abs(sum - 100) < 1 ? null : 'SUM ' + sum, p.questions.length >= 1 ? null : 'NO_QUESTIONS', p.candidates.filter(c => c.recommended).length === 2 ? null : 'RECOMMENDED', /不是确定/.test(p.reminder) ? null : 'REMINDER']; });
 let picked;
-await test('E-03', 'answers consistent with the true chart put the true 时辰 (未) in the top 2', async () => { const r = await est({ period: 'UNKNOWN', answers: { Q_DECIDE: '比劫', Q_PRESSURE: 'balanced', Q_RHYTHM: '土', Q_CLOSE: 'none', Q_EXPRESS: 'low', Q_MONEY: 'low', Q_RULES: 'mid', Q_CARE: 'mid' } }); const p = await r.json();
-  picked = p.candidates.find(c => c.label.startsWith('未')); return [r.status === 200 ? null : 'STATUS', picked && picked.rank <= 2 ? null : 'TRUE_HOUR_NOT_TOP2', /^\d\d:\d\d$/.test(picked?.fillTime ?? '') ? null : 'FILL_TIME', /性格/.test(p.note) ? null : 'CIRCULAR_NOTE']; });
+const SAMPLE = Object.fromEntries('CCDCDBDDBDAC'.split('').map((v, i) => ['H' + String(i + 1).padStart(2, '0'), v]));   // Chris's test answers (2026-10-23)
+await test('E-03', "Chris's sample answers reproduce his result: 申时 first, 巳时 second", async () => { const r = await est({ period: 'UNKNOWN', answers: SAMPLE }); const p = await r.json();
+  picked = p.candidates[0]; return [r.status === 200 ? null : 'STATUS', p.candidates[0]?.label.startsWith('申') ? null : 'FIRST ' + p.candidates[0]?.label, p.candidates[1]?.label.startsWith('巳') ? null : 'SECOND ' + p.candidates[1]?.label,
+    /^\d\d:\d\d$/.test(picked?.fillTime ?? '') ? null : 'FILL_TIME', p.questions.length === 0 ? null : 'QUESTIONS_LEFT', /性格/.test(p.note) ? null : 'CIRCULAR_NOTE']; });
 await test('E-04', 'picked candidate fills a normal reading, marked as estimated', async () => { const r = await send({ version: 2, birth: { ...ebirth, time: picked.fillTime }, estimate: { label: picked.label, percent: picked.percent }, asOf: ASOF }); const p = await r.json();
   return [r.status === 200 ? null : 'STATUS', p.chart.pillars.hour === picked.label.match(/（(..)）/)[1] ? null : 'HOUR_MISMATCH', /推测时辰/.test(p.timeEstimated?.message ?? '') ? null : 'NO_ESTIMATE_NOTICE', ...readingChecks(p)]; });
-await test('E-05', 'AFTERNOON offers only the questions that separate its candidates', async () => { const p = await (await est({ period: 'AFTERNOON' })).json(); return [p.candidateCount === 3 ? null : 'CANDS ' + p.candidateCount, p.questions.length > 0 && p.questions.length < 8 ? null : 'Q_NOT_ADAPTIVE ' + p.questions.length]; });
+const TE = await imp('api/time-estimate.mjs');
+await test('E-05', 'only questions that separate the candidates are offered, never one already answered', async () => { const p = await (await est({ period: 'AFTERNOON', answers: { H01: 'B' } })).json();
+  const br = [...new Set(p.candidates.map(c => c.label[0]))];
+  const sep = id => { const q = TE.QUESTIONS.find(x => x.id === id); return q.options.some(o => { const n = br.filter(b => q.bind[o].includes(b)).length; return n > 0 && n < br.length; }); };
+  return [p.candidateCount === 3 ? null : 'CANDS ' + p.candidateCount, p.questions.length > 0 ? null : 'NO_QUESTIONS', p.questions.some(q => q.id === 'H01') ? 'ASKED_AGAIN' : null, p.questions.every(q => sep(q.id)) ? null : 'NON_SEPARATING_QUESTION']; });
 await test('E-06', 'MIDNIGHT includes the late-Zi candidate with the next day pillar', async () => { const p = await (await est({ period: 'MIDNIGHT' })).json(); return [new Set(p.candidates.map(c => c.dayPillar)).size === 2 ? null : 'NO_NEXT_DAY_CANDIDATE']; });
 for (const [id, body, code] of [['E-07a', { period: 'TEATIME' }, 'INVALID_PERIOD'], ['E-07b', { period: 'UNKNOWN', answers: { Q_DECIDE: 'MAYBE' } }, 'INVALID_ANSWERS'], ['E-07c', { period: 'AROUND', around: '25:00' }, 'INVALID_AROUND'], ['E-07d', { period: 'UNKNOWN', extra: 1 }, 'UNKNOWN_FIELD']])
   await test(id, 'estimate invalid -> ' + code, async () => { const r = await est(body); const p = await r.json(); return [r.status === 400 ? null : 'STATUS ' + r.status, p.error?.code === code ? null : 'CODE ' + p.error?.code]; });

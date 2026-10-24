@@ -39,7 +39,7 @@ domains[4] { domain, label（事业／财运／感情与关系／身心节奏）
 使用推测时辰：请求加 `estimate:{label,percent}`（此时 `birth.time` 必须有值），回应多一个 `timeEstimated{label,percent,message}`，页面须显示该提醒。
 
 ## 推测时辰：`/api/v2/time-estimate`（P4 V1）
-- `GET`：回传 `questions[8]{id,question,options[]{value,label}}`、`periods[10]{id,label}`、`findExactHint`（先建议查出生证明等）。`value`/`id` 是程序用的代号，不显示给用户。
+- `GET`：回传 `questions[12]{id,question,options[]{value,label}}`（问卷 V2：H01–H12，选项 A–D 与「不确定，跳过」SKIP）、`intro`（作答提示）、`periods[10]{id,label}`、`findExactHint`（先建议查出生证明等）。`value`/`id` 是程序用的代号，不显示给用户。
 - `POST`：`{version:2, birth:{date,gender,location}, period, around?, answers?{题目id:选项value}, asOf?}`
   - `period`：MIDNIGHT 半夜、EARLY_MORNING 凌晨、DAWN 清晨、MORNING 上午、NOON 中午、AFTERNOON 下午、DUSK 傍晚、EVENING 晚上、AROUND「我知道大约几点」（加 `around:"HH:MM"`，前后各 1 小时）、UNKNOWN 完全不知道。
   - 回应：`candidates[]{rank,label 例如「申时（壬申）」,civilRange,fillTime,percent,dayPillar,recommended}`（`recommended` 为前 2 名）、`questions[]`（**还没回答且能区分候选的题**，按区分力排序；为空表示问完了）、`candidateCount`、`reminder`、`note`、可能的 `cannotNarrow`。
@@ -49,6 +49,12 @@ domains[4] { domain, label（事业／财运／感情与关系／身心节奏）
 
 ## 建议的呈现方式（UI 阶段定稿）
 总览页每题只显示「结论」→ 点进去显示「结论 + 建议」→「看命盘依据」默认收起 → 提醒放底部小字。
+
+## 使用统计：`/api/v2/stats`（P8-1，2026-10-24）
+- 只记次数，不记任何个人资料（无 IP、无出生资料、无 cookie、无识别码）。事件：`visit`（每次打开网页）、`reading`（成功显示命盘）、`quiz`（开始推测时辰问卷）、`period`（每个命盘第一次点进大运或流年详细页）。
+- `POST {"event":"reading"}` → `{"ok":true}`；其他内容一律 400 `INVALID_EVENT`。`GET` → `{"total":{visit,reading,quiz,period}}`；`GET ?days=N`（最多 90）另附每日表（马来西亚时间）。GET 可被 CDN 快取 60 秒。
+- 储存：Netlify Blobs，正式站用 `gc-stats`，预览与分支部署用 `gc-stats-preview`（测试不会灌水）。并发写入用「比对后写入」重试，不会漏记。规则在 `engine\api\stats-service.mjs`，检查 `tests\p8_stats_check.mjs`。
+- 网页底部公开显示「观辰已为大家排盘 N 次 · 访问 M 人次」（Chris 决定）；完整表格在 `/stats.html`。
 
 ## 错误
 `{ "error": { "code", "field", "message"（中文，可直接显示） } }`

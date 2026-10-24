@@ -13,7 +13,7 @@ const error = (status, code, field = null, extra = {}) => json(status, { error: 
 export const handleReadingRequest = (request, options = {}) => handleJson(request, READING_PATH, body => createReading(body, options));
 // GET returns the questionnaire and period options (for the UI); POST returns ranked candidate 时辰.
 export const handleEstimateRequest = (request, options = {}) => (request.method === 'GET' && new URL(request.url).pathname === ESTIMATE_PATH)
-  ? json(200, { questions: questionnaire(), periods: [...Object.keys(PERIODS).filter(p => p !== 'UNKNOWN'), 'AROUND', 'UNKNOWN'].map(value => ({ value, label: copy(`estimate.period.${value}`) })), findExactHint: copy('estimate.find_exact') })
+  ? json(200, { questions: questionnaire(), periods: [...Object.keys(PERIODS).filter(p => p !== 'UNKNOWN'), 'AROUND', 'UNKNOWN'].map(value => ({ value, label: copy(`estimate.period.${value}`) })), findExactHint: copy('estimate.find_exact'), intro: copy('estimate.intro') })
   : handleJson(request, ESTIMATE_PATH, body => estimateBirthTime(body, options), 'GET, POST');
 
 async function handleJson(request, path, run, allow = 'POST') {

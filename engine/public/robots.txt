@@ -1,0 +1,7 @@
+# 观辰 (2026-10-24)
+User-agent: *
+Allow: /
+Disallow: /stats.html
+Disallow: /api/
+
+Sitemap: https://guanchen-preview.netlify.app/sitemap.xml

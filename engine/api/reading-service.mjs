@@ -1,5 +1,8 @@
 // GUANCHEN API v2 - reading service. Fresh contract (2026-10-22); does not use the GPT-era request schema or public payload layers.
 // Pipeline: validate -> computeStep01 (verified calculation core) -> chart analysis -> timing root -> ChartFacts -> 20 v2 generators.
+import { yongShen } from '../interpretation/yongshen.mjs';
+import { buildProChart, SHENSHA_ORDER, SHENSHA_GROUP } from '../interpretation/pro-chart.mjs';
+import { buildPeriods } from '../interpretation/periods.mjs';
 import fs from 'node:fs';
 import { computeStep01 } from '../packages/step01-production-core/facade.mjs';
 import { assertCivilDateTime } from '../packages/step01-production-core/src/core/bazi/calendar/gregorian.mjs';
@@ -86,9 +89,13 @@ const CORE_REJECT = { AMBIGUOUS_LOCAL_TIME: 'BIRTH_TIME_AMBIGUOUS', INVALID_LOCA
 const fmtCivil = c => `${c.year}-${pad(c.month)}-${pad(c.day)} ${pad(c.hour)}:${pad(c.minute)}:${pad(Math.floor(c.second ?? 0))}`;
 const fmtDate = c => `${c.year}-${pad(c.month)}-${pad(c.day)}`;
 
-function chartSection(core, f) {
+function chartSection(core, f, req) {
   const t = copy, L = core.luck;
   const startYearsExact = L.startAge.years + L.startAge.months / 12 + L.startAge.days / 365;
+  const dayun = L.sequence.map((p, i) => ({ pillar: p.name ?? p, startDate: fmtDate(L.boundariesLocal[i]), startAge: Math.round((startYearsExact + i * 10) * 10) / 10 }));
+  const ys = yongShen(f, t);
+  const pro = buildProChart({ pillars: core.pillars, gender: f.gender, dayun: L.sequence.map(p => p.name ?? p), annual: f.annual?.pillar ?? null, natalRelations: f.natalRelations });
+  const present = new Set(pro.pillars.flatMap(r => r.shensha));
   return {
     pillars: { ...core.pillars },
     trueSolarTime: fmtCivil(core.trueSolarTime),
@@ -101,11 +108,17 @@ function chartSection(core, f) {
     luck: {
       direction: L.direction === 'FORWARD' ? '顺行' : '逆行',
       startAge: { ...L.startAge },
-      dayun: L.sequence.map((p, i) => ({ pillar: p.name ?? p, startDate: fmtDate(L.boundariesLocal[i]), startAge: Math.round((startYearsExact + i * 10) * 10) / 10 })),
+      dayun,
       current: f.dayun ? f.dayun.pillar : null,
       annual: f.annual.pillar,
     },
     overview: [dmLine(f, t), { term: familyTerm(f), plain: t(`chart.family.${f.dominantFamily}`) }, structureLine(f, t)].map(x => ({ term: x.term, plain: x.plain })),
+    fiveElements: ys,
+    pro,
+    // P7-4: one-line notes for the 神煞 present in this chart (shown when a chip is tapped)
+    glossary: { shensha: SHENSHA_ORDER.filter(n => present.has(n)).map(name => ({ name, group: SHENSHA_GROUP[name], note: t(`ssg.${name}`) })) },
+    // P7-3 大运／流年详解
+    periods: buildPeriods({ pillars: core.pillars, gender: f.gender, ys, luck: dayun, birthYear: req.date.year, zone: req.location.timezone, currentDayun: f.dayun?.pillar ?? null, currentAnnual: f.annual?.pillar ?? null, asOfYear: req.asOf.local.year, t }),
   };
 }
 
@@ -146,5 +159,5 @@ export function createReading(body, options = {}) {
     const a = GENERATORS[id](f, t, req.context[id] ?? 'NONE');
     return { id, question: QUESTION_TEXT[id], available: true, conclusion: a.conclusion, basis: a.basis, advice: a.advice, reminder: a.reminder };
   }) }));
-  return { ...base, timeKnown: true, ...(req.estimate ? { timeEstimated: { ...req.estimate, message: t('global.time_estimated', { label: req.estimate.label, percent: req.estimate.percent }) } } : {}), chart: chartSection(core, f), domains };
+  return { ...base, timeKnown: true, ...(req.estimate ? { timeEstimated: { ...req.estimate, message: t('global.time_estimated', { label: req.estimate.label, percent: req.estimate.percent }) } } : {}), chart: chartSection(core, f, req), domains };
 }

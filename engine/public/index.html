@@ -2,23 +2,43 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>观辰</title>
-<style>
-  :root { --bg:#f6f4ef; --fg:#2b2a27; --muted:#7a766d; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#1c1b19; --fg:#ece9e2; --muted:#9a958b; } }
-  html,body { height:100%; margin:0; }
-  body { background:var(--bg); color:var(--fg); display:grid; place-items:center; padding:0 16px;
-         font-family:"Noto Serif SC","Songti SC","SimSun",serif; text-align:center; }
-  h1 { font-weight:500; letter-spacing:.3em; margin:0 0 .6em; font-size:2rem; }
-  p { color:var(--muted); margin:0; font-size:.95rem; line-height:1.8; }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- open to search engines (Chris 2026-10-24); stats.html and 404.html stay noindex -->
+<link rel="canonical" href="https://guanchen-preview.netlify.app/">
+<link rel="alternate" hreflang="zh-Hans" href="https://guanchen-preview.netlify.app/?lang=cn">
+<link rel="alternate" hreflang="zh-Hant" href="https://guanchen-preview.netlify.app/?lang=tw">
+<link rel="alternate" hreflang="x-default" href="https://guanchen-preview.netlify.app/">
+<meta name="theme-color" content="#070B15">
+<title>观辰 · 八字命盘</title>
+<meta name="description" content="输入出生资料，排出你的八字命盘：五行喜用、十神神煞、大运流年，以及事业、财运、关系与身心的倾向。">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="apple-mobile-web-app-title" content="观辰">
+<!-- share preview (WhatsApp / Facebook / Telegram / X). The site address must match the live Netlify address. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="观辰">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="观辰 · 仰观星辰，细看自己的节奏">
+<meta property="og:description" content="输入出生资料，排出你的八字命盘：五行喜用、十神神煞、大运流年，以及事业、财运、关系与身心的倾向。">
+<meta property="og:url" content="https://guanchen-preview.netlify.app/">
+<meta property="og:image" content="https://guanchen-preview.netlify.app/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="观辰：辰字印章标志，夜空与山线">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-  <main>
-    <h1>观辰</h1>
-    <p>网站建设中</p>
-  </main>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div id="app" class="app"></div>
+<div id="sheet-root"></div>
+<noscript><p class="noscript">观辰需要开启 JavaScript 才能排盘。</p></noscript>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script type="module" src="assets/app.js"></script>
 </body>
 </html>

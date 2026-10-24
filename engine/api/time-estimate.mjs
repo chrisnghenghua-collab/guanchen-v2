@@ -1,8 +1,7 @@
-// GUANCHEN API v2 - birth-time estimation (P4 V1, 2026-10-22).
+// GUANCHEN API v2 - birth-time estimation (P4 V1 2026-10-22; questionnaire V2 2026-10-23).
 // Probabilistic by design: narrows the candidate 时辰 inside the period the user remembers, ranks them by how well each
-// candidate chart matches the user's answers, and returns relative likelihoods. It never claims the true birth time.
-import { validateReadingRequest, createReadingFacts, corePillarsFor, ReadingError } from './reading-service.mjs';
-import { dayBranchRelations, bandGroup, level } from '../interpretation/lib.mjs';
+// candidate 时辰 matches the user's answers, and returns relative likelihoods. It never claims the true birth time.
+import { validateReadingRequest, corePillarsFor, ReadingError } from './reading-service.mjs';
 import { loadCopy } from '../interpretation/copy.mjs';
 const copy = loadCopy();
 const pad = n => String(n).padStart(2, '0');
@@ -16,29 +15,28 @@ export const PERIODS = {
 };
 const BRANCH_HOUR = { 子: '23:00–01:00', 丑: '01:00–03:00', 寅: '03:00–05:00', 卯: '05:00–07:00', 辰: '07:00–09:00', 巳: '09:00–11:00', 午: '11:00–13:00', 未: '13:00–15:00', 申: '15:00–17:00', 酉: '17:00–19:00', 戌: '19:00–21:00', 亥: '21:00–23:00' };
 
-// ---- questionnaire: each question reads one chart feature; options carry the feature value they correspond to ----
-const lvl3 = w => { const l = level(w); return l === 'strong' ? 'high' : l === 'present' ? 'mid' : 'low'; };
-const dayRel = f => { const r = dayBranchRelations(f)[0]; return !r ? 'none' : r.type === '冲' ? 'clash' : r.type === '合' ? 'combine' : 'friction'; };
-const topElement = f => Object.entries(f.elementWeights).sort((a, b) => b[1] - a[1])[0][0];
-export const QUESTIONS = [
-  { id: 'Q_DECIDE', feature: f => f.dominantFamily, options: ['比劫', '食伤', '财', '官杀', '印'], kind: 'nominal' },
-  { id: 'Q_PRESSURE', feature: f => bandGroup(f.strengthBand), options: ['strong', 'balanced', 'weak'], kind: 'ordinal' },
-  { id: 'Q_RHYTHM', feature: topElement, options: ['木', '火', '土', '金', '水'], kind: 'nominal' },
-  { id: 'Q_CLOSE', feature: dayRel, options: ['clash', 'combine', 'friction', 'none'], kind: 'nominal' },
-  { id: 'Q_EXPRESS', feature: f => lvl3(f.familyWeights['食伤']), options: ['high', 'mid', 'low'], kind: 'ordinal' },
-  { id: 'Q_MONEY', feature: f => lvl3(f.familyWeights['财']), options: ['high', 'mid', 'low'], kind: 'ordinal' },
-  { id: 'Q_RULES', feature: f => lvl3(f.familyWeights['官杀']), options: ['high', 'mid', 'low'], kind: 'ordinal' },
-  { id: 'Q_CARE', feature: f => lvl3(f.familyWeights['印']), options: ['high', 'mid', 'low'], kind: 'ordinal' },
+// ---- questionnaire V2 (2026-10-23, supplied by Chris): 12 questions, options A–D each bound to some hour branches.
+// Q1–Q8 temperament (weight 0.4), Q9–Q12 life events (weight 0.6). Score of a 时辰 = sum of the weights of the answers whose
+// chosen option lists its branch. The bindings and weights are Chris's and must not be changed without his approval.
+const HQ = [
+  ['H01', .4, { A: '子亥', B: '丑未辰戌', C: '寅', D: '卯' }], ['H02', .4, { A: '巳', B: '午', C: '申', D: '酉' }],
+  ['H03', .4, { A: '亥子', B: '丑未', C: '寅午', D: '申巳' }], ['H04', .4, { A: '卯', B: '酉巳', C: '申辰', D: '寅戌' }],
+  ['H05', .4, { A: '亥子', B: '丑未', C: '寅午', D: '申巳酉' }], ['H06', .4, { A: '亥卯酉', B: '午申', C: '丑辰未', D: '寅巳戌' }],
+  ['H07', .4, { A: '亥子', B: '丑辰未', C: '寅午', D: '申酉巳' }], ['H08', .4, { A: '子亥卯', B: '丑辰未戌', C: '寅午', D: '申酉巳' }],
+  ['H09', .6, { A: '子寅巳戌', B: '卯辰未', C: '申亥', D: '午酉' }], ['H10', .6, { A: '亥卯申酉', B: '午寅', C: '丑辰未', D: '巳申' }],
+  ['H11', .6, { A: '寅申亥', B: '丑未辰', C: '卯午', D: '巳酉戌' }], ['H12', .6, { A: '卯辰未', B: '寅巳戌', C: '申午', D: '子亥丑' }]
 ];
-// Likelihood of an answer given the candidate's feature value (a soft model: people describe themselves imperfectly).
-function likelihood(q, answer, truth) {
-  if (q.kind === 'nominal') { const k = q.options.length; return answer === truth ? 0.52 : 0.48 / (k - 1); }
-  const order = q.options, d = Math.abs(order.indexOf(answer) - order.indexOf(truth));
-  return d === 0 ? 0.6 : d === 1 ? 0.3 : 0.1;
+export const QUESTIONS = HQ.map(([id, weight, bind]) => ({ id, weight, bind, options: ['A', 'B', 'C', 'D'] }));
+// Turning scores into relative likelihoods: P ∝ prior × e^(BETA × score). BETA only sets how sharp the percentages are;
+// it never changes the order of the 时辰.
+export const BETA = 0.8;
+export function scoreBranch(branch, answers) {
+  let s = 0;
+  for (const q of QUESTIONS) { const a = answers[q.id]; if (a && a !== 'SKIP' && q.bind[a].includes(branch)) s += q.weight; }
+  return s;
 }
-export function questionnaire() {
-  return QUESTIONS.map(q => ({ id: q.id, question: copy(`estimate.${q.id}.q`), options: [...q.options.map(o => ({ value: o, label: copy(`estimate.${q.id}.${o}`) })), { value: 'SKIP', label: copy('estimate.skip') }] }));
-}
+const toApi = q => ({ id: q.id, question: copy(`estimate.${q.id}.q`), options: [...q.options.map(o => ({ value: o, label: copy(`estimate.${q.id}.${o}`) })), { value: 'SKIP', label: copy('estimate.skip') }] });
+export function questionnaire() { return QUESTIONS.map(toApi); }
 
 function windows(period, around) {
   if (period === 'AROUND') {
@@ -49,7 +47,7 @@ function windows(period, around) {
   return PERIODS[period];
 }
 
-/** Candidate 时辰 inside the remembered period, each with its facts, prior weight (= minutes covered) and a representative civil time. */
+/** Candidate 时辰 inside the remembered period, each with its hour branch, prior weight (= minutes covered) and a representative civil time. */
 const CACHE = new Map(); // small per-instance memo: the same person usually calls several times while answering
 export function candidatesFor(birth, period, around, options = {}) {
   const ck = JSON.stringify([birth, period, around ?? null, options.asOf ?? null, options.asOf ? 0 : Math.floor((options.now ?? Date.now()) / 3600000)]);
@@ -62,12 +60,11 @@ export function candidatesFor(birth, period, around, options = {}) {
     if (!p) continue;
     const key = p.day + p.hour; const s = slots.get(key) ?? { key, minutes: [], pillars: p }; s.minutes.push(m); slots.set(key, s);
   }
-  // 2) full analysis once per slot, at its middle minute
+  // 2) one entry per slot, represented by its middle minute
   const out = [];
   for (const s of slots.values()) {
     const mid = s.minutes[Math.floor(s.minutes.length / 2)];
-    let r; try { r = createReadingFacts({ version: 2, birth: { ...birth, time: hm(mid) }, ...(options.asOf ? { asOf: options.asOf } : {}) }, options); } catch (e) { if (e instanceof ReadingError) continue; throw e; }
-    out.push({ ...s, facts: r.facts, civilTime: hm(mid), civilFrom: hm(s.minutes[0]), civilTo: hm(s.minutes.at(-1) + 5) });
+    out.push({ ...s, branch: s.pillars.hour[1], civilTime: hm(mid), civilFrom: hm(s.minutes[0]), civilTo: hm(s.minutes.at(-1) + 5) });
   }
   if (CACHE.size > 200) CACHE.clear();
   CACHE.set(ck, out);
@@ -85,24 +82,16 @@ export function estimateBirthTime(body, options = {}) {
   const answers = body.answers ?? {};
   if (typeof answers !== 'object' || Array.isArray(answers) || !Object.keys(answers).every(k => QUESTIONS.some(q => q.id === k))) fail('INVALID_ANSWERS', 'answers');
   for (const [k, v] of Object.entries(answers)) { const q = QUESTIONS.find(x => x.id === k); if (v !== 'SKIP' && !q.options.includes(v)) fail('INVALID_ANSWERS', `answers.${k}`); }
-  const scored = cands.map(c => {
-    let w = c.minutes.length; // prior: how much of the remembered period this 时辰 covers
-    for (const q of QUESTIONS) { const a = answers[q.id]; if (a && a !== 'SKIP') w *= likelihood(q, a, q.feature(c.facts)); }
-    return { c, w };
-  });
+  const scored = cands.map(c => ({ c, w: c.minutes.length * Math.exp(BETA * scoreBranch(c.branch, answers)) }));   // prior = minutes covered
   const total = scored.reduce((s, x) => s + x.w, 0);
   const ranked = scored.map(x => ({ ...x, p: x.w / total })).sort((a, b) => b.p - a.p);
   const answered = Object.values(answers).filter(v => v !== 'SKIP').length;
-  // Only questions whose answer would differ between the remaining candidates are useful; order by how evenly they split
-  // the current probability mass (entropy). Answered questions are not asked again.
-  const useful = QUESTIONS.filter(q => !(q.id in answers)).map(q => {
-    const mass = {}; for (const x of ranked) { const v = q.feature(x.c.facts); mass[v] = (mass[v] ?? 0) + x.p; }
-    const h = -Object.values(mass).reduce((s, m) => s + (m > 0 ? m * Math.log2(m) : 0), 0);
-    return { q, h, groups: Object.keys(mass).length };
-  }).filter(x => x.groups > 1).sort((a, b) => b.h - a.h);
-  const ask = useful.map(({ q }) => ({ id: q.id, question: copy(`estimate.${q.id}.q`), options: [...q.options.map(o => ({ value: o, label: copy(`estimate.${q.id}.${o}`) })), { value: 'SKIP', label: copy('estimate.skip') }] }));
+  // Ask in Chris's order (Q1→Q12), skipping questions already answered and questions that cannot separate the
+  // remaining candidates (every option lists all of them or none of them) - those add the same score to every 时辰.
+  const branches = [...new Set(ranked.map(x => x.c.branch))];
+  const ask = QUESTIONS.filter(q => !(q.id in answers) && q.options.some(o => { const n = branches.filter(b => q.bind[o].includes(b)).length; return n > 0 && n < branches.length; })).map(toApi);
   return {
-    apiVersion: '2.0.0', period: body.period, answered, candidateCount: ranked.length, questions: ask,
+    apiVersion: '2.0.0', period: body.period, answered, candidateCount: ranked.length, intro: copy('estimate.intro'), questions: ask,
     ...(ask.length === 0 && answered === 0 && ranked.length > 1 ? { cannotNarrow: copy('estimate.cannot_narrow') } : {}),
     candidates: ranked.map((x, i) => ({ rank: i + 1, label: `${x.c.pillars.hour[1]}时（${x.c.pillars.hour}）`, solarHour: BRANCH_HOUR[x.c.pillars.hour[1]], civilRange: `${x.c.civilFrom}–${x.c.civilTo}`,
       fillTime: x.c.civilTime, percent: Math.round(x.p * 1000) / 10, dayPillar: x.c.pillars.day, recommended: i < 2 })),
