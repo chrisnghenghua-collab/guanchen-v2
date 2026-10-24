@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://guanchen-preview.netlify.app/</loc>
+    <loc>https://guanchen-bazi.netlify.app/</loc>
     <lastmod>2026-10-24</lastmod>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://guanchen-preview.netlify.app/?lang=cn"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://guanchen-preview.netlify.app/?lang=tw"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://guanchen-bazi.netlify.app/?lang=cn"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://guanchen-bazi.netlify.app/?lang=tw"/>
   </url>
 </urlset>

@@ -34,6 +34,13 @@ await check('L-09', 'security headers present', async () => { const r = await fe
 await check('L-10', 'usage counters answer (numbers only)', async () => { const r = await fetch(BASE + '/api/v2/stats'); const j = await r.json();
   return [r.status === 200 ? null : 'STATUS ' + r.status, j.total && ['visit', 'reading', 'quiz', 'period'].every(k => Number.isInteger(j.total[k])) && Object.keys(j.total).length === 4 ? null : 'BAD_SHAPE ' + JSON.stringify(j).slice(0, 80)]; });
 await check('L-11', 'unknown address shows the 观辰 404 page', async () => { const r = await fetch(BASE + '/no-such-page-' + Date.now()); const t = await r.text(); return [r.status === 404 ? null : 'STATUS ' + r.status, t.includes('观辰') ? null : 'NOT_OUR_404']; });
+await check('L-12', 'three.js from cdnjs still matches the fingerprint in the page', async () => {
+  const home = await (await fetch(BASE + '/')).text();
+  const m = home.match(/src="(https:\/\/cdnjs[^"]+three\.min\.js)" integrity="(sha512-[^"]+)"/); if (!m) return ['NO_INTEGRITY_ATTRIBUTE'];
+  const { createHash } = await import('node:crypto');
+  const buf = Buffer.from(await (await fetch(m[1])).arrayBuffer());
+  return ['sha512-' + createHash('sha512').update(buf).digest('base64') === m[2] ? null : 'THREE_JS_CHANGED'];
+});
 const fail = rows.filter(r => r.p.length).length;
 console.log(fail ? `P5_LIVE FAIL: ${fail}/${rows.length} - send this output to Claude` : `P5_LIVE PASS: ${rows.length}/${rows.length} (${BASE})`);
 process.exit(fail ? 1 : 0);

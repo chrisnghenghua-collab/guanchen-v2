@@ -4,4 +4,4 @@ Allow: /
 Disallow: /stats.html
 Disallow: /api/
 
-Sitemap: https://guanchen-preview.netlify.app/sitemap.xml
+Sitemap: https://guanchen-bazi.netlify.app/sitemap.xml
