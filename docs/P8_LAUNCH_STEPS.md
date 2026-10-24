@@ -19,9 +19,16 @@ git push -u origin p8-preview
 ```
 
 ## 2. 让 Netlify 为这个分支建预览（只需设定一次）
-Netlify → 你的网站 → Site configuration → Build & deploy → Continuous deployment → Branches and deploy contexts → Configure →
-Branch deploys 选 **Let me add individual branches** → 输入 `p8-preview` → Save。
-然后到 Deploys 页面，按 "Trigger deploy"（如果没有自动开始）。完成后预览网址是：
+Netlify → 项目 guanchen-preview → **Project configuration → Developer settings → Continuous deployment** →
+「Branches and deploy contexts」区块 → Configure → Branch deploys 选 **Let me add individual branches** → 输入 `p8-preview` → Save。
+（Netlify 2025 年后把 Site 改称 Project，菜单名称以官方文件为准。）
+如果第 1 步已经推送过，用一个空白提交启动预览（不扣点）：
+```
+git commit --allow-empty -m "start preview"
+git push
+```
+**不要**在 Deploys 页面按 "Trigger deploy"：那会重新部署正式站（扣 15 点）。
+Deploys 页面最上方应出现标示 p8-preview / Branch deploy 的部署，1–3 分钟后变成 Published。预览网址：
 `https://p8-preview--guanchen-preview.netlify.app`
 
 ## 3. 检查预览（不扣点）
